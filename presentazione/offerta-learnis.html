@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preparatore AI per Learnis</title>
+<meta name="description" content="Proposta di pilota a risultati per Learnis Italia: un Preparatore AI sul metodo, presentato nell'ordine di una riunione di vendita.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@500;700&family=Archivo:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Impianto: indice laterale fisso + colonna di lettura; ogni sezione è anche una slide (frecce ← →). */
+:root {
+  --blu: #1c2b4f;           /* inchiostro e fasce del marchio */
+  --azzurro: #0074bd;       /* azioni e AI */
+  --verde: #007767;         /* risultati, tutor */
+  --rosso: #a22135;         /* problemi */
+  --giallo: #f9db7b;        /* evidenziatore, il gesto dello studio */
+  --oro: #b2a26a;
+  --sfondo: #ffffff;
+  --sfondo-2: #f4f5f7;
+  --inchiostro: #1c2b4f;
+  --tenue: #575e72;
+  --bordo: #d5d8e0;
+  --fascia: #1c2b4f;        /* fascia di copertina e chiusura */
+  --fascia-testo: #ffffff;
+  --punto-vuoto: #d5d8e0;
+  --f-display: "Anton", "Archivo Narrow", Impact, sans-serif;
+  --f-stretto: "Archivo Narrow", "Arial Narrow", sans-serif;
+  --f-testo: "Archivo", system-ui, -apple-system, sans-serif;
+  --f-citazione: "Spectral", Georgia, serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sfondo: #111a2e; --sfondo-2: #19243d; --inchiostro: #e9edf5; --tenue: #aab2c5; --bordo: #33405f;
+    --azzurro: #5aaee6; --verde: #3fb8a4; --rosso: #e0697b; --fascia: #0b1324; --fascia-testo: #f3f5fa;
+    --punto-vuoto: #33405f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sfondo: #111a2e; --sfondo-2: #19243d; --inchiostro: #e9edf5; --tenue: #aab2c5; --bordo: #33405f;
+  --azzurro: #5aaee6; --verde: #3fb8a4; --rosso: #e0697b; --fascia: #0b1324; --fascia-testo: #f3f5fa;
+  --punto-vuoto: #33405f; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--sfondo); color: var(--inchiostro); font: 400 17px/1.6 var(--f-testo); }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--azzurro); outline-offset: 3px; }
+a { color: var(--azzurro); }
+
+/* ------------------------------------------------ impianto */
+.impianto { display: grid; grid-template-columns: 15rem minmax(0, 1fr); max-width: 1240px; margin: 0 auto; padding-inline: 16px; gap: 3rem; }
+.indice { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; padding-block: 2rem; max-height: 100vh; overflow-y: auto; }
+.indice p { font: 700 0.85rem/1.3 var(--f-stretto); color: var(--tenue); margin-bottom: 0.75rem; }
+.indice ol { list-style: none; margin: 0; padding: 0; counter-reset: voce; display: grid; gap: 0.1rem; }
+.indice li { counter-increment: voce; }
+.indice a { display: grid; grid-template-columns: 1.6rem 1fr; text-decoration: none; color: var(--tenue); font: 500 0.95rem/1.35 var(--f-stretto); padding: 0.3rem 0.4rem; border-radius: 3px; }
+.indice a::before { content: counter(voce); font-variant-numeric: tabular-nums; }
+.indice li.appendice a::before { content: ""; }
+.indice a:hover { color: var(--inchiostro); background: var(--sfondo-2); }
+.indice a[aria-current="true"] { color: var(--inchiostro); background: var(--sfondo-2); box-shadow: inset 3px 0 0 var(--giallo); }
+.comandi { margin-top: 1.25rem; display: grid; gap: 0.5rem; font-size: 0.85rem; color: var(--tenue); }
+.comandi button { font: 700 0.9rem/1.2 var(--f-stretto); background: transparent; color: var(--inchiostro); border: 2px solid var(--bordo); border-radius: 4px; padding: 0.55rem 0.7rem; cursor: pointer; text-align: left; }
+.comandi button:hover { border-color: var(--azzurro); }
+
+.contenuto { min-width: 0; padding-block: 2rem 4rem; }
+.sezione { padding-block: 3.5rem; border-top: 1px solid var(--bordo); scroll-margin-top: 1rem; }
+.sezione:first-child { border-top: 0; }
+.numero { font: 700 0.95rem/1 var(--f-stretto); color: var(--azzurro); margin-bottom: 0.75rem; font-variant-numeric: tabular-nums; }
+.sezione h2 { font: 400 clamp(2rem, 4.2vw, 3rem)/1.05 var(--f-display); letter-spacing: 0.005em; margin-bottom: 1.25rem; max-width: 22ch; }
+.sezione h3 { font: 700 1.2rem/1.25 var(--f-stretto); margin-bottom: 0.5rem; }
+.lead { font-size: 1.2rem; line-height: 1.55; color: var(--tenue); max-width: 60ch; margin-bottom: 1.75rem; }
+.testo { max-width: 65ch; }
+.testo + .testo { margin-top: 0.9rem; }
+.nota { font-size: 0.85rem; color: var(--tenue); max-width: 70ch; margin-top: 1rem; }
+.ipotesi { display: inline-block; font: 700 0.75rem/1.2 var(--f-stretto); color: var(--blu); background: var(--giallo); padding: 0.15rem 0.45rem; border-radius: 2px; letter-spacing: 0.02em; vertical-align: 0.15em; }
+mark { background: linear-gradient(transparent 45%, var(--giallo) 45%); color: inherit; padding: 0 0.1em; }
+
+/* ------------------------------------------------ copertina */
+.copertina { background: var(--fascia); color: var(--fascia-testo); border-radius: 4px; padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3.5rem); border-top: 0; }
+.copertina .per { font: 700 1rem/1.3 var(--f-stretto); color: var(--giallo); margin-bottom: 1.25rem; }
+.copertina h1 { font: 400 clamp(2.6rem, 7vw, 5.2rem)/0.98 var(--f-display); letter-spacing: 0.005em; max-width: 14ch; }
+.copertina .sotto { font-size: 1.25rem; line-height: 1.5; margin-top: 1.5rem; max-width: 46ch; opacity: 0.9; }
+.copertina dl { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; margin: 2.25rem 0 0; }
+.copertina dt { font: 500 0.85rem/1.2 var(--f-stretto); opacity: 0.7; }
+.copertina dd { margin: 0.2rem 0 0; font: 700 1.05rem/1.3 var(--f-stretto); }
+
+/* ------------------------------------------------ punti: dieci persone in demo */
+.demo { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-block: 0.5rem 2rem; }
+.demo figure { margin: 0; padding: 1.25rem; background: var(--sfondo-2); border-radius: 4px; }
+.punti { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; max-width: 22rem; margin-bottom: 0.9rem; }
+.punti span { aspect-ratio: 1; border-radius: 50%; background: var(--punto-vuoto); }
+.punti span.iscritto { background: var(--verde); }
+.punti span.nuovo { background: var(--giallo); box-shadow: inset 0 0 0 3px var(--verde); }
+.demo figcaption { font-size: 0.95rem; color: var(--tenue); }
+.demo figcaption strong { display: block; font: 400 2rem/1.05 var(--f-display); color: var(--inchiostro); margin-bottom: 0.2rem; }
+
+/* ------------------------------------------------ elenchi a due colonne */
+.coppie { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem 2rem; margin-top: 0.5rem; }
+.coppie > div { min-width: 0; border-top: 3px solid var(--bordo); padding-top: 0.9rem; }
+.coppie > div.problema { border-top-color: var(--rosso); }
+.coppie > div.risultato { border-top-color: var(--verde); }
+.coppie p { color: var(--tenue); }
+.coppie .cifra { font: 400 1.9rem/1.05 var(--f-display); color: var(--inchiostro); margin-bottom: 0.35rem; }
+
+.citazione { font: 400 1.3rem/1.5 var(--f-citazione); font-style: italic; border-left: 4px solid var(--giallo); padding-left: 1.1rem; max-width: 52ch; margin-top: 2rem; }
+.citazione span { display: block; font: 500 0.85rem/1.3 var(--f-stretto); font-style: normal; color: var(--tenue); margin-top: 0.5rem; }
+
+/* ------------------------------------------------ tabelle */
+.tabella { overflow-x: auto; margin-top: 0.5rem; }
+table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.97rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.7rem 0.9rem 0.7rem 0; border-bottom: 1px solid var(--bordo); }
+th { font: 700 0.9rem/1.3 var(--f-stretto); color: var(--tenue); }
+td.valore, th.valore { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: 0; }
+tr.totale td { border-bottom: 0; border-top: 2px solid var(--inchiostro); font-weight: 700; padding-top: 0.9rem; }
+td:first-child { font-weight: 600; }
+
+/* ------------------------------------------------ equazione del valore */
+.equazione { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1rem 1.5rem; margin: 0.5rem 0 2rem; max-width: 42rem; }
+.equazione .nome { font: 400 1.8rem/1 var(--f-display); }
+.frazione { display: grid; text-align: center; font: 700 1rem/1.35 var(--f-stretto); }
+.frazione .su { padding-bottom: 0.45rem; border-bottom: 2px solid var(--inchiostro); color: var(--verde); }
+.frazione .giu { padding-top: 0.45rem; color: var(--rosso); }
+
+/* ------------------------------------------------ diagramma */
+.diagramma { overflow-x: auto; margin-top: 2rem; }
+.diagramma svg { display: block; width: 100%; min-width: 40rem; height: auto; }
+.diagramma .scatola { fill: var(--sfondo-2); stroke: var(--bordo); stroke-width: 1.5; }
+.diagramma .scatola.tutor { fill: var(--sfondo); stroke: var(--verde); stroke-width: 3; }
+.diagramma .scatola.ai { stroke: var(--azzurro); stroke-width: 2; }
+.diagramma .t-titolo { fill: var(--inchiostro); font: 700 16px var(--f-stretto); }
+.diagramma .t-riga { fill: var(--tenue); font: 400 13px var(--f-testo); }
+.diagramma .freccia { stroke: var(--tenue); stroke-width: 1.6; fill: none; }
+.diagramma .t-freccia { fill: var(--tenue); font: 500 12.5px var(--f-stretto); }
+.diagramma .punta { fill: var(--tenue); }
+.didascalia { font-size: 0.9rem; color: var(--tenue); margin-top: 0.6rem; max-width: 65ch; }
+
+/* ------------------------------------------------ prototipo */
+.alcuore { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; max-width: 30rem; margin: 0.5rem 0 1.5rem; list-style: none; padding: 0; }
+.alcuore li { background: var(--blu); color: #fff; text-align: center; font: 400 1.6rem/1 var(--f-display); padding: 0.55rem 0 0.45rem; border-radius: 2px; }
+.alcuore li small { display: block; font: 500 0.6rem/1.15 var(--f-stretto); margin-top: 0.3rem; opacity: 0.85; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
+:root[data-theme="dark"] .alcuore li { background: #2e4270; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .alcuore li { background: #2e4270; } }
+.viste { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+.viste div { min-width: 0; }
+.viste p { color: var(--tenue); font-size: 0.95rem; }
+.bottone { display: inline-block; background: var(--azzurro); color: #fff; text-decoration: none; font: 700 1.05rem/1.2 var(--f-stretto); padding: 0.85rem 1.3rem; border-radius: 4px; margin-top: 1.75rem; }
+.bottone:hover { filter: brightness(1.08); }
+
+/* ------------------------------------------------ fasi di prezzo */
+.fasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin: 0.5rem 0 2.25rem; }
+.fase { min-width: 0; padding: 1.25rem; border: 1px solid var(--bordo); border-radius: 4px; display: grid; gap: 0.5rem; align-content: start; }
+.fase.centrale { border: 2px solid var(--inchiostro); }
+.fase .chi { font: 700 0.9rem/1.2 var(--f-stretto); color: var(--tenue); }
+.fase .prezzo { font: 400 1.9rem/1.05 var(--f-display); }
+.fase p { font-size: 0.95rem; color: var(--tenue); }
+
+.calcolatore { background: var(--sfondo-2); border-radius: 4px; padding: 1.5rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem 2rem; align-items: end; }
+.calcolatore h3 { grid-column: 1 / -1; }
+.campi { display: grid; gap: 1rem; }
+.campi label { display: grid; gap: 0.3rem; font: 700 0.95rem/1.2 var(--f-stretto); }
+.campi input { font: 600 1.1rem/1.2 var(--f-testo); padding: 0.55rem 0.7rem; border: 2px solid var(--bordo); border-radius: 4px; background: var(--sfondo); color: var(--inchiostro); width: 100%; max-width: 12rem; font-variant-numeric: tabular-nums; }
+.risultato-calc { min-width: 0; }
+.risultato-calc .etichetta { font: 700 0.95rem/1.2 var(--f-stretto); color: var(--tenue); }
+.risultato-calc output { display: block; font: 400 clamp(2.2rem, 5vw, 3.2rem)/1.05 var(--f-display); margin: 0.3rem 0 0.6rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.risultato-calc p { font-size: 0.95rem; color: var(--tenue); }
+.risultato-calc .formula { font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------ roadmap */
+.roadmap { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) 5.75rem minmax(0, 1fr) 5.75rem minmax(0, 1fr) 5.75rem minmax(0, 1fr); align-items: stretch; gap: 0.5rem; }
+.roadmap li { min-width: 0; }
+.roadmap .tappa { border: 1px solid var(--bordo); border-radius: 4px; padding: 1rem; height: 100%; }
+.roadmap .tappa.pilota { border: 2px solid var(--verde); }
+.roadmap .tappa strong { display: block; font: 400 1.35rem/1.1 var(--f-display); margin-bottom: 0.35rem; }
+.roadmap .tappa span { display: block; font-size: 0.9rem; color: var(--tenue); }
+.roadmap .cancello { align-self: center; text-align: center; font: 700 0.85rem/1.25 var(--f-stretto); color: var(--tenue); position: relative; padding: 2.4rem 0 0; }
+.roadmap .cancello::before { content: ""; position: absolute; top: 0.3rem; left: 50%; width: 1.6rem; height: 1.6rem; transform: translateX(-50%) rotate(45deg); background: var(--giallo); border: 2px solid var(--oro); }
+
+/* ------------------------------------------------ chiusura */
+.chiusura { background: var(--fascia); color: var(--fascia-testo); border-radius: 4px; padding: clamp(2rem, 5vw, 3.5rem); border-top: 0; margin-top: 3.5rem; }
+.chiusura .numero { color: var(--giallo); }
+.chiusura .lead { color: var(--fascia-testo); opacity: 0.88; }
+.chiusura ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.4rem; max-width: 60ch; }
+.chiusura .data { font: 400 2rem/1.1 var(--f-display); color: var(--giallo); margin-top: 2rem; }
+
+.appendice-sez h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.piede { font-size: 0.85rem; color: var(--tenue); padding-block: 2rem 3rem; border-top: 1px solid var(--bordo); }
+
+/* ------------------------------------------------ modalità presentazione */
+body.slide .sezione { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+body.slide .copertina, body.slide .chiusura { min-height: calc(100vh - 2rem); margin-block: 1rem; }
+
+/* ------------------------------------------------ responsive */
+@media (max-width: 980px) {
+  .impianto { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .indice { position: static; max-height: none; padding-block: 1.25rem 0; }
+  .indice ol { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); }
+  .comandi { display: none; }
+}
+@media (max-width: 1100px) {
+  .roadmap { grid-template-columns: minmax(0, 1fr); max-width: 34rem; }
+  .roadmap .cancello { padding: 0.4rem 0 0.4rem 2.6rem; text-align: left; }
+  .roadmap .cancello::before { top: 50%; left: 1.1rem; transform: translate(-50%, -50%) rotate(45deg); }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .calcolatore { grid-template-columns: minmax(0, 1fr); }
+  .equazione { grid-template-columns: minmax(0, 1fr); }
+  .alcuore li small { display: none; }
+  body.slide .sezione { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="impianto">
+  <nav class="indice" aria-label="Indice della presentazione">
+    <p>Proposta per Learnis Italia</p>
+    <ol id="voci">
+      <li><a href="#copertina">Il Preparatore AI</a></li>
+      <li><a href="#voi">Cosa abbiamo capito di voi</a></li>
+      <li><a href="#costo">Cosa costa restare così</a></li>
+      <li><a href="#risultato">Il risultato</a></li>
+      <li><a href="#studia">Perché non è un altro StudIA</a></li>
+      <li><a href="#offerta">L'offerta</a></li>
+      <li><a href="#demo">Guardatelo funzionare</a></li>
+      <li><a href="#bonus">Cosa aggiungiamo</a></li>
+      <li><a href="#investimento">L'investimento</a></li>
+      <li><a href="#garanzia">La garanzia</a></li>
+      <li><a href="#adesso">Perché adesso, perché voi</a></li>
+      <li><a href="#percorso">Come partiamo</a></li>
+      <li><a href="#passo">Il prossimo passo</a></li>
+      <li class="appendice"><a href="#fonti">Appendice: dati e fonti</a></li>
+    </ol>
+    <div class="comandi">
+      <button type="button" id="modalita">Modalità presentazione</button>
+      <span>Frecce ← → per passare da una sezione all'altra.</span>
+    </div>
+  </nav>
+
+  <main class="contenuto">
+    <!-- 1 --------------------------------------------------------------------------- -->
+    <section class="sezione copertina" id="copertina" aria-labelledby="h-copertina">
+      <p class="per">Proposta per Learnis Italia · centro di Rimini</p>
+      <h1 id="h-copertina">Il metodo Learnis, ogni sera, a casa di ogni corsista.</h1>
+      <p class="sotto">Un Preparatore AI costruito sul vostro metodo: porta famiglie alle demo, accompagna il corsista tra una sessione e l'altra e riduce la preparazione non pagata dei tutor. Si parte con un pilota di 90 giorni, con metà del compenso legata ai risultati.</p>
+      <dl>
+        <div><dt>Da</dt><dd>[Proponente]</dd></div>
+        <div><dt>Per</dt><dd>Direzione Learnis Italia</dd></div>
+        <div><dt>Data</dt><dd>Ottobre 2026</dd></div>
+      </dl>
+    </section>
+
+    <!-- 2 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="voi" aria-labelledby="h-voi">
+      <p class="numero">2</p>
+      <h2 id="h-voi">Cosa abbiamo capito di voi</h2>
+      <p class="lead">Learnis è nata l'8 settembre 2026 e riunisce le reti che da quasi vent'anni insegnano il metodo Genio in 21 Giorni: oltre 50 centri in tre paesi, oltre 5.000 partecipanti l'anno, 33 centri in Italia. Il metodo funziona. Il problema che ci avete indicato come primo è un altro.</p>
+
+      <div class="demo">
+        <figure>
+          <div class="punti" role="img" aria-label="Dieci persone in demo, due si iscrivono">
+            <span class="iscritto"></span><span class="iscritto"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <figcaption><strong>Meno di 2 iscritti al mese</strong>A Rimini arrivano in demo meno di 10 persone al mese, in circa 3 demo, e si iscrive circa il 20%.</figcaption>
+        </figure>
+        <figure>
+          <div class="punti" role="img" aria-label="Meno di una persona su venti usa ancora l'app dopo 90 giorni">
+            <span class="iscritto"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <figcaption><strong>Meno del 5% a 90 giorni</strong>Dopo tre mesi quasi nessun corsista usa più l'app Learnis Mind per esercitarsi.</figcaption>
+        </figure>
+      </div>
+
+      <div class="coppie">
+        <div><h3>State puntando sui social</h3><p>E state aggiungendo demo online a quelle in sede. Servirà qualcosa da far provare a chi arriva da un post.</p></div>
+        <div><h3>I tutor si preparano gratis</h3><p>Per ogni ora di sessione pagata 20 € ne serve almeno un'altra di preparazione, non pagata, affiancati da un istruttore che ha poco tempo.</p></div>
+        <div><h3>L'AI è già passata da voi</h3><p>StudIA ha deluso, e LEARNIS AI Study è un corso di due giorni senza seguito. Ogni proposta AI parte con un'obiezione in più.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="costo" aria-labelledby="h-costo">
+      <p class="numero">3</p>
+      <h2 id="h-costo">Cosa costa restare così</h2>
+      <p class="lead">Ogni mese senza cambiare qualcosa ha un prezzo, anche se non compare in nessun bilancio.</p>
+      <div class="coppie">
+        <div class="problema"><p class="cifra">33.600 €</p><h3>l'anno per ogni corsista al mese che manca</h3><p>Un iscritto in più al mese in una sede vale 12 corsi da 2.800 €. Su 33 sedi sono circa 1,1 milioni l'anno.</p></div>
+        <div class="problema"><p class="cifra">10 € l'ora</p><h3>quanto guadagna davvero un tutor</h3><p>20 € per un'ora di sessione divisi per due ore di lavoro. A Rimini sono attivi 4 Preparatori su 6: tenerli motivati conta.</p></div>
+        <div class="problema"><p class="cifra">8 ore</p><h3>di follow-up che non lasciano un'abitudine</h3><p>Tutti i corsisti le fanno. Tra una sessione e l'altra, a casa, il metodo resta da solo.</p></div>
+        <div class="problema"><p class="cifra">0 €</p><h3>il prezzo dell'alternativa</h3><p>Un assistente AI generico è gratuito e risponde a tutto. Rischia di far sembrare superfluo un metodo di studio.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="risultato" aria-labelledby="h-risultato">
+      <p class="numero">4</p>
+      <h2 id="h-risultato">Il risultato: più iscritti dalle stesse demo</h2>
+      <p class="lead">Lo stesso numero di persone in demo, una famiglia in più che dice sì. A Rimini basta passare dal 20% al 30% di conversione per avere un corso in più al mese.</p>
+
+      <div class="demo">
+        <figure>
+          <div class="punti" role="img" aria-label="Dieci persone in demo, tre si iscrivono">
+            <span class="iscritto"></span><span class="iscritto"></span><span class="nuovo"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <figcaption><strong>Da 2 a 3 su 10</strong>In demo la famiglia vede il Preparatore AI lavorare su un compito vero del figlio, con il vostro metodo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="equazione">
+        <span class="nome">Valore =</span>
+        <div class="frazione">
+          <span class="su">Risultato da sogno × Probabilità che funzioni</span>
+          <span class="giu">Tempo per arrivarci × Sforzo richiesto</span>
+        </div>
+      </div>
+
+      <div class="coppie">
+        <div class="risultato"><h3>Per la direzione</h3><p>Più iscritti dalle stesse demo, corsisti che applicano il metodo dopo il corso, un marchio all'avanguardia. Niente sviluppo interno e nessuna modifica all'app nel pilota.</p></div>
+        <div class="risultato"><h3>Per corsisti e famiglie</h3><p>Una mappa fatta col metodo sul proprio libro in pochi minuti, aiuto alle 22 come alle 15, e un report che mostra ai genitori se il metodo viene usato.</p></div>
+        <div class="risultato"><h3>Per i tutor</h3><p>La bozza della sessione già pronta, da rivedere in pochi minuti, e un avviso quando un corsista smette di praticare. Il tutor resta l'unico che decide.</p></div>
+      </div>
+    </section>
+
+    <!-- 5 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="studia" aria-labelledby="h-studia">
+      <p class="numero">5</p>
+      <h2 id="h-studia">Perché non è un altro StudIA</h2>
+      <p class="lead">Conosciamo le cause del fallimento di StudIA. Ognuna ha una risposta precisa in questa offerta.</p>
+      <div class="tabella">
+        <table>
+          <thead><tr><th scope="col">Cosa non ha funzionato</th><th scope="col">Cosa facciamo di diverso</th></tr></thead>
+          <tbody>
+            <tr><td>Promesse eccessive</td><td>Promettiamo solo indicatori misurabili in 90 giorni, e metà del compenso dipende da quelli.</td></tr>
+            <tr><td>Nessun seguito dopo il corso</td><td>Il sistema vive dentro le 8 ore di follow-up che fanno tutti i corsisti, e il tutor manda compiti e ripassi.</td></tr>
+            <tr><td>Nato già vecchio</td><td>Modelli recenti, materiali aggiornabili senza riaddestrare, confronto periodico tra modelli su casi valutati dai vostri Preparatori.</td></tr>
+            <tr><td>Era un pretesto per presentare il corso</td><td>Progetto a sé, con responsabile, budget e KPI propri. La prova gratuita dà un risultato vero subito.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="citazione">L'AI diventa il veicolo del metodo, non il suo sostituto.<span>Il principio di tutta l'offerta</span></p>
+    </section>
+
+    <!-- 6 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="offerta" aria-labelledby="h-offerta">
+      <p class="numero">6</p>
+      <h2 id="h-offerta">L'offerta: cosa ricevete nel pilota</h2>
+      <p class="lead">Un Preparatore AI che parla il vostro metodo, al servizio del tutor. Nessuno può offrirvi lo stesso, perché è costruito sui vostri materiali e sui vostri dati.</p>
+      <div class="tabella">
+        <table>
+          <thead><tr><th scope="col">Componente</th><th scope="col" class="valore">Valore di riferimento <span class="ipotesi">stima</span></th></tr></thead>
+          <tbody>
+            <tr><td>Copilota che prepara le sessioni per il Preparatore</td><td class="valore">15.000 €</td></tr>
+            <tr><td>Preparatore AI per il corsista, sul metodo, in web app e integrabile in Learnis Mind</td><td class="valore">12.000 €</td></tr>
+            <tr><td>Dataset del metodo curato e validato dai Preparatori, di proprietà Learnis</td><td class="valore">10.000 €</td></tr>
+            <tr><td>Cruscotto del tutor con le segnalazioni di chi sta mollando</td><td class="valore">5.000 €</td></tr>
+            <tr><td>Misurazione dei KPI e report finale del pilota</td><td class="valore">5.000 €</td></tr>
+            <tr><td>Report automatico alle famiglie</td><td class="valore">3.000 €</td></tr>
+            <tr><td>Formazione dei Preparatori all'uso</td><td class="valore">3.000 €</td></tr>
+            <tr class="totale"><td>Valore complessivo</td><td class="valore">53.000 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="diagramma" aria-labelledby="cap-arch">
+        <svg viewBox="0 0 760 340" role="img" aria-label="Il corsista chiede al Preparatore AI, che legge i materiali del metodo; i dati vanno al cruscotto del tutor, che decide e aggiorna i materiali.">
+          <defs><marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="punta"/></marker></defs>
+          <rect class="scatola" x="10" y="20" width="200" height="96" rx="4"/>
+          <text class="t-titolo" x="26" y="50">Corsista</text>
+          <text class="t-riga" x="26" y="74">web app dal telefono</text>
+          <text class="t-riga" x="26" y="94">chat, voce, foto del libro</text>
+
+          <rect class="scatola ai" x="280" y="20" width="210" height="116" rx="4"/>
+          <text class="t-titolo" x="296" y="50">Preparatore AI</text>
+          <text class="t-riga" x="296" y="74">modello open in UE</text>
+          <text class="t-riga" x="296" y="94">legge i materiali del metodo</text>
+          <text class="t-riga" x="296" y="114">guida con domande</text>
+
+          <rect class="scatola" x="560" y="20" width="190" height="116" rx="4"/>
+          <text class="t-titolo" x="576" y="50">Cruscotto tutor</text>
+          <text class="t-riga" x="576" y="74">chi sta mollando</text>
+          <text class="t-riga" x="576" y="94">bozza della sessione</text>
+          <text class="t-riga" x="576" y="114">report alla famiglia</text>
+
+          <rect class="scatola" x="280" y="208" width="210" height="96" rx="4"/>
+          <text class="t-titolo" x="296" y="238">Materiali del metodo</text>
+          <text class="t-riga" x="296" y="262">fasi ALCUORE, esercizi</text>
+          <text class="t-riga" x="296" y="282">approvati dai Preparatori</text>
+
+          <rect class="scatola tutor" x="560" y="208" width="190" height="96" rx="4"/>
+          <text class="t-titolo" x="576" y="238">Preparatore Personale</text>
+          <text class="t-riga" x="576" y="262">decide il percorso</text>
+          <text class="t-riga" x="576" y="282">approva i materiali</text>
+
+          <path class="freccia" d="M210,62 L278,62" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="222" y="54">chiede</text>
+          <path class="freccia" d="M490,70 L558,70" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="506" y="62">dati</text>
+          <path class="freccia" d="M655,136 L655,206" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="662" y="176">avvisi</text>
+          <path class="freccia" d="M560,256 L492,256" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="500" y="248">aggiorna</text>
+          <path class="freccia" d="M385,208 L385,138" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="392" y="178">contesto</text>
+          <path class="freccia" d="M655,304 L655,326 L110,326 L110,118" marker-end="url(#punta)"/>
+          <text class="t-freccia" x="122" y="318">sessioni uno a uno</text>
+        </svg>
+        <figcaption class="didascalia" id="cap-arch">Il tutor resta al comando: riceve gli avvisi, aggiorna i materiali da cui l'AI attinge, fa le sessioni. L'AI lavora tra una sessione e l'altra e non decide mai il percorso. Nel pilota è una web app separata: nessun lavoro richiesto a Dieffetech.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 7 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="demo" aria-labelledby="h-demo">
+      <p class="numero">7</p>
+      <h2 id="h-demo">Guardatelo funzionare</h2>
+      <p class="lead">Abbiamo preparato una simulazione cliccabile. Le risposte sono scritte in anticipo, ma il percorso è quello reale: la pagina di un libro diventa una mappa, una fase del metodo alla volta.</p>
+      <ol class="alcuore" aria-label="Le sette fasi ALCUORE">
+        <li>A<small>Approccio</small></li><li>L<small>Lettura</small></li><li>C<small>Comprensione</small></li><li>U<small>Unire i puntini</small></li><li>O<small>Organizzazione</small></li><li>R<small>Ricordo</small></li><li>E<small>Esposizione</small></li>
+      </ol>
+      <div class="viste">
+        <div><h3>Prova gratuita</h3><p>La foto di una pagina, sette domande, una mappa. Alla fine, la richiesta di una demo.</p></div>
+        <div><h3>Copilota del tutor</h3><p>La bozza della sessione di giovedì, da correggere e approvare.</p></div>
+        <div><h3>Cruscotto</h3><p>Sei corsisti ordinati per rischio di abbandono, con i motivi scritti in chiaro.</p></div>
+        <div><h3>Report alla famiglia</h3><p>Abitudini di studio della settimana, senza le conversazioni.</p></div>
+      </div>
+      <a class="bottone" href="../prototipo/index.html">Apri la simulazione</a>
+      <p class="nota">Nella prova vera il Preparatore AI legge la pagina fotografata dal ragazzo. Nella simulazione usa una pagina d'esempio sulla fotosintesi.</p>
+    </section>
+
+    <!-- 8 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="bonus" aria-labelledby="h-bonus">
+      <p class="numero">8</p>
+      <h2 id="h-bonus">Cosa aggiungiamo senza toccare il prezzo</h2>
+      <p class="lead">Non scontiamo il pilota. Aggiungiamo ciò che vi serve per vendere e per partire tranquilli.</p>
+      <div class="coppie">
+        <div><h3>La prova gratuita per i social</h3><p>La foto di una pagina diventa una mappa col metodo, per genitori e ragazzi dai 14 anni, più un kit per mostrarla dal vivo nelle demo in sede. Porta alla demo chi vuole il percorso completo.</p></div>
+        <div><h3>Il kit di conformità</h3><p>Informative per corsisti e genitori, registro dei trattamenti, valutazione d'impatto, analisi AI Act. Meno lavoro per il vostro legale.</p></div>
+        <div><h3>Spagna e Stati Uniti</h3><p>Il prototipo anche in spagnolo e inglese, banco di prova per le reti dove tutto è già online.</p></div>
+        <div><h3>Studiare con l'AI, con metodo</h3><p>Un modulo nuovo per i vostri corsi: il seguito naturale di LEARNIS AI Study.</p></div>
+        <div><h3>Uno studio di efficacia</h3><p>Con un ateneo partner, nella vostra tradizione di ricerca con il CNR. <span class="ipotesi">da confermare</span></p></div>
+      </div>
+    </section>
+
+    <!-- 9 --------------------------------------------------------------------------- -->
+    <section class="sezione" id="investimento" aria-labelledby="h-investimento">
+      <p class="numero">9</p>
+      <h2 id="h-investimento">L'investimento</h2>
+      <p class="lead">Una parte la incassiamo solo se il valore arriva. Tutte le cifre sono da validare insieme in discovery.</p>
+      <div class="fasi">
+        <div class="fase"><span class="chi">0 · Discovery e prototipo, 2 settimane</span><span class="prezzo">Gratuita</span><p>Demo su una fase del metodo con 2 o 3 Preparatori. Se non convince, la mappa del percorso del corsista resta vostra.</p></div>
+        <div class="fase centrale"><span class="chi">1 · Pilota di 90 giorni a Rimini</span><span class="prezzo">12.000 € + 12.000 €</span><p>Il primo importo è fisso. Il secondo è dovuto solo se i KPI concordati vengono raggiunti.</p></div>
+        <div class="fase"><span class="chi">2 · Rollout su un paese</span><span class="prezzo">30 € a corsista</span><p>Per ogni corsista che entra nel follow-up: circa l'1% del prezzo del corso.</p></div>
+      </div>
+
+      <form class="calcolatore" id="calcolatore" aria-labelledby="h-calc">
+        <h3 id="h-calc">Quanto vale per voi <span class="ipotesi">ipotesi</span></h3>
+        <div class="campi">
+          <label for="c-sedi">Sedi coinvolte <input id="c-sedi" type="number" min="1" max="60" step="1" value="33" inputmode="numeric"></label>
+          <label for="c-corsisti">Iscritti in più al mese per sede <input id="c-corsisti" type="number" min="0" max="10" step="0.5" value="1" inputmode="decimal"></label>
+          <label for="c-prezzo">Prezzo del corso in demo (€) <input id="c-prezzo" type="number" min="0" step="100" value="2800" inputmode="numeric"></label>
+        </div>
+        <div class="risultato-calc">
+          <span class="etichetta">Valore annuo</span>
+          <output id="c-valore" for="c-sedi c-corsisti c-prezzo">1.108.800 €</output>
+          <p class="formula" id="c-formula">33 sedi × 12 mesi × 1 iscritto × 2.800 €</p>
+          <p>Il fisso del pilota si ripaga con <strong>5 iscrizioni in più</strong> in tutto; anche con la parte a risultato ne bastano 9.</p>
+        </div>
+      </form>
+      <p class="nota">Il calcolo usa il prezzo del corso, non il margine: quanto resta a Learnis dopo tutor, istruttore e sede è una delle domande aperte. Il pilota da solo non può dimostrare la conversione, perché in 90 giorni a Rimini passano 25–30 persone in demo: per questo la si misura su 6 mesi, includendo le demo online.</p>
+    </section>
+
+    <!-- 10 -------------------------------------------------------------------------- -->
+    <section class="sezione" id="garanzia" aria-labelledby="h-garanzia">
+      <p class="numero">10</p>
+      <h2 id="h-garanzia">La garanzia</h2>
+      <p class="lead">Se Learnis mette a disposizione i Preparatori e i materiali concordati e i KPI del pilota non vengono raggiunti, la parte a risultato non è dovuta e lavoriamo altri 30 giorni gratis.</p>
+      <h3>Gli indicatori, da fissare insieme in discovery</h3>
+      <div class="tabella">
+        <table>
+          <thead><tr><th scope="col">KPI</th><th scope="col">Come si misura</th></tr></thead>
+          <tbody>
+            <tr><td>Demo prenotate grazie alla prova gratuita</td><td>Richieste arrivate dalla prova, sui social e nelle demo online</td></tr>
+            <tr><td>Persone in demo che provano il Preparatore AI</td><td>Quante lo provano e quante di loro chiedono il corso</td></tr>
+            <tr><td>Corsisti che usano ancora il sistema</td><td>A 30 e 60 giorni; oggi l'app è sotto il 5% a 90 giorni</td></tr>
+            <tr><td>Preparazione per ora di sessione</td><td>Da 60 a 20 minuti o meno, misurati con i tutor</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="nota">Nel rollout la garanzia diventa implicita: il compenso cresce con il numero di corsisti, quindi guadagniamo di più solo se Learnis vende di più.</p>
+    </section>
+
+    <!-- 11 -------------------------------------------------------------------------- -->
+    <section class="sezione" id="adesso" aria-labelledby="h-adesso">
+      <p class="numero">11</p>
+      <h2 id="h-adesso">Perché adesso, e perché solo voi</h2>
+      <div class="coppie">
+        <div><h3>Il calendario scolastico</h3><p>Partendo a gennaio, con il secondo quadrimestre, i KPI del pilota si misurano ad aprile. Per partire a gennaio la discovery deve cominciare entro novembre; dopo, si slitta all'anno scolastico successivo.</p></div>
+        <div><h3>L'AI Act</h3><p>Dal 2 agosto 2026 chi usa un'AI deve saperlo. Gli obblighi per i sistemi ad alto rischio nell'istruzione sono stati spostati al 2 dicembre 2027 dal Regolamento (UE) 2026/1744. Costruire conformi oggi evita di rifare tutto tra un anno.</p></div>
+        <div><h3>La vostra riorganizzazione</h3><p>Sistemi e contenuti si stanno unificando adesso, e partono la spinta sui social e le demo online. È il momento in cui l'AI costa meno da inserire.</p></div>
+        <div><h3>Un solo centro, un solo network</h3><p>Nel pilota seguiamo solo Rimini e i suoi 4 Preparatori attivi, perché ognuno va affiancato di persona. E nei primi 12 mesi lavoriamo con un solo network di formazione sul metodo di studio per paese.</p></div>
+      </div>
+    </section>
+
+    <!-- 12 -------------------------------------------------------------------------- -->
+    <section class="sezione" id="percorso" aria-labelledby="h-percorso">
+      <p class="numero">12</p>
+      <h2 id="h-percorso">Come partiamo</h2>
+      <p class="lead">Quattro fasi. Si passa alla successiva solo se la precedente supera il suo cancello.</p>
+      <ol class="roadmap">
+        <li><div class="tappa"><strong>Discovery</strong><span>2 settimane, gratuita. Demo su una fase del metodo.</span></div></li>
+        <li class="cancello">I Preparatori approvano la demo</li>
+        <li><div class="tappa pilota"><strong>Pilota</strong><span>90 giorni a Rimini, 4 Preparatori. Modello open con i vostri materiali.</span></div></li>
+        <li class="cancello">KPI del pilota raggiunti</li>
+        <li><div class="tappa"><strong>Fine-tuning</strong><span>Il modello si addestra sui dialoghi validati dai tutor, con consenso.</span></div></li>
+        <li class="cancello">Batte la versione base su 100 casi</li>
+        <li><div class="tappa"><strong>Rollout</strong><span>Prima l'Italia, poi Spagna e Stati Uniti.</span></div></li>
+      </ol>
+      <p class="nota">Se il fine-tuning non supera la versione base sullo stesso set di casi valutati dai Preparatori, si va al rollout senza.</p>
+    </section>
+
+    <!-- 13 -------------------------------------------------------------------------- -->
+    <section class="sezione chiusura" id="passo" aria-labelledby="h-passo">
+      <p class="numero">13</p>
+      <h2 id="h-passo">Il prossimo passo: due settimane di discovery, gratis</h2>
+      <p class="lead">Alla fine avete una demo funzionante su una fase del metodo, provata dai vostri Preparatori, e la mappa del percorso del corsista dopo il corso. Se non vi convince, la mappa resta vostra.</p>
+      <h3>Cosa ci serve da voi</h3>
+      <ul>
+        <li>Due o tre Preparatori di Rimini e l'istruttore che li affianca, per qualche ora</li>
+        <li>I materiali di una fase del metodo</li>
+        <li>Le risposte alle domande ancora aperte, in appendice</li>
+        <li>Un referente per la parte legale e privacy</li>
+      </ul>
+      <p class="data">Inizio entro novembre, pilota a gennaio.</p>
+    </section>
+
+    <!-- appendice ----------------------------------------------------------------- -->
+    <section class="sezione appendice-sez" id="fonti" aria-labelledby="h-fonti">
+      <p class="numero">Appendice</p>
+      <h2 id="h-fonti">Dati, fonti e domande aperte</h2>
+      <div class="tabella">
+        <table>
+          <thead><tr><th scope="col">Dato</th><th scope="col">Fonte</th></tr></thead>
+          <tbody>
+            <tr><td>Oltre 50 centri, oltre 5.000 partecipanti l'anno, nata l'8 settembre 2026</td><td><a href="https://www.newswire.com/news/learnis-a-new-international-network-for-transformative-education-is-born">Comunicato Newswire</a></td></tr>
+            <tr><td>33 centri in Italia, di cui 4 solo online</td><td><a href="https://www.learnis.org/global-presence/italy/centres/">learnis.org, centri in Italia</a></td></tr>
+            <tr><td>Metodo ALCUORE, profili AMOS, Preparatore Personale</td><td><a href="https://ordineavvocatimilano.it/media/convenzioni/GENIO%20NET/Presentazione%20Genio%20in%2021%20Giorni-1.pdf">Presentazione Genio Net</a></td></tr>
+            <tr><td>LEARNIS AI Study: 8 ore, dagli 11 anni, 97 €, nessun seguito</td><td><a href="https://www.learnis.org/formative-offer/learning-skills/learnis-ai-study/">learnis.org, AI Study</a></td></tr>
+            <tr><td>App Learnis Mind: Dieffetech, copyright Genio Net, accesso solo per gli iscritti</td><td><a href="https://apps.apple.com/us/app/id1463606211">App Store</a></td></tr>
+            <tr><td>Demo, conversione, prezzi, carico dei tutor, uso dell'app</td><td>Risposte di Learnis</td></tr>
+            <tr><td>Consenso all'AI valido dai 14 anni (Legge 132/2025, art. 4)</td><td><a href="https://www.orizzontescuola.it/intelligenza-artificiale-il-consenso-dei-minore-e-valido-dai-14-anni-in-su-prima-spetta-ai-genitori/">Orizzonte Scuola</a></td></tr>
+            <tr><td>Alto rischio AI Act dal 2 dicembre 2027 (Reg. UE 2026/1744)</td><td><a href="https://www.orrick.com/en/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes">Orrick</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 style="margin-top:2rem">Domande ancora aperte</h3>
+      <ul class="testo">
+        <li>Quanti corsisti e quante persone in demo ha al mese una sede, in media sulla rete italiana?</li>
+        <li>Come funzioneranno le demo online: quando partono, quante persone al mese, chi le conduce?</li>
+        <li>Quanto resta a Learnis di un corso da 2.800 € dopo i costi diretti?</li>
+        <li>Quante ore a settimana l'istruttore di Rimini dedica ad affiancare i tutor?</li>
+        <li>Quando parte la prima edizione di LEARNIS AI Study?</li>
+      </ul>
+      <p class="nota">Prezzi, valori di riferimento e KPI sono ipotesi da validare in discovery. La classificazione AI Act va confermata da un legale prima del pilota.</p>
+    </section>
+    <p class="piede">Proposta di [Proponente] per Learnis Italia. Documento di lavoro, non un materiale ufficiale Learnis.</p>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  // ---------------------------------------------------------- calcolatore
+  // separatore delle migliaia sempre presente (Intl in italiano non lo mette sotto 10.000)
+  const fmt = { format: (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".") };
+  const campi = ["c-sedi", "c-corsisti", "c-prezzo"].map((id) => document.getElementById(id));
+  function calcola() {
+    const [sedi, corsisti, prezzo] = campi.map((c) => Math.max(0, parseFloat(c.value) || 0));
+    const valore = sedi * 12 * corsisti * prezzo;
+    document.getElementById("c-valore").textContent = fmt.format(valore) + " €";
+    document.getElementById("c-formula").textContent =
+      `${fmt.format(sedi)} ${sedi === 1 ? "sede" : "sedi"} × 12 mesi × ${String(corsisti).replace(".", ",")} ${corsisti === 1 ? "iscritto" : "iscritti"} × ${fmt.format(prezzo)} €`;
+  }
+  campi.forEach((c) => c.addEventListener("input", calcola));
+  document.getElementById("calcolatore").addEventListener("submit", (e) => e.preventDefault());
+  calcola();
+
+  // ---------------------------------------------------------- indice e navigazione
+  const sezioni = Array.from(document.querySelectorAll("main .sezione"));
+  const voci = Array.from(document.querySelectorAll("#voci a"));
+  function attiva(id) {
+    voci.forEach((a) => a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false"));
+  }
+  if ("IntersectionObserver" in window) {
+    const oss = new IntersectionObserver((voci) => {
+      voci.forEach((v) => { if (v.isIntersecting) attiva(v.target.id); });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    sezioni.forEach((s) => oss.observe(s));
+  }
+  function corrente() {
+    const centro = window.innerHeight * 0.3;
+    let i = 0;
+    sezioni.forEach((s, k) => { if (s.getBoundingClientRect().top <= centro) i = k; });
+    return i;
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.target instanceof Element && e.target.closest("input, textarea, select, summary")) return;
+    let passo = 0;
+    if (e.key === "ArrowRight" || e.key === "PageDown") passo = 1;
+    if (e.key === "ArrowLeft" || e.key === "PageUp") passo = -1;
+    if (!passo) return;
+    e.preventDefault();
+    const dest = sezioni[Math.min(sezioni.length - 1, Math.max(0, corrente() + passo))];
+    dest.scrollIntoView({ block: "start" });
+  });
+  const bottone = document.getElementById("modalita");
+  bottone.addEventListener("click", () => {
+    const on = document.body.classList.toggle("slide");
+    bottone.textContent = on ? "Torna alla lettura" : "Modalità presentazione";
+  });
+})();
+</script>
+</body>
+</html>

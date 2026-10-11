@@ -23,7 +23,7 @@ il testo che propongo
 
 **Fonti verificate e confermate senza modifiche:** comunicato Newswire dell'8 settembre 2026 (struttura, persone, oltre 50 centri, oltre 5.000 partecipanti, CNR-IRPI SaperCapire, codice etico 2024, garante etico, testimonianze certificate); App Store (Dieffetech, copyright Genio Net, «Data Not Collected»); Orizzonte Scuola sulla Legge 132/2025, art. 4 comma 4 (sotto i 14 anni serve chi esercita la responsabilità genitoriale; dai 14 il consenso è valido se le informazioni sono comprensibili); presentazione Genio Net (ALCUORE, AMOS, Preparatore Personale, supervisione di Riccardo Venturini).
 
-**Fuori dal README.** Il libro non indica un ordine con cui presentare l'offerta al cliente: la presentazione HTML segue quindi un ordine di vendita (dolore → risultato → offerta → prezzo → garanzia → scadenza), non quello dei capitoli. Hormozi ripete «il dolore è la presentazione» (cap. 4): la prima slide dopo la copertina è il problema di Learnis, con i loro numeri.
+**Fuori dal README.** Il libro non indica un ordine con cui presentare l'offerta al cliente: la presentazione HTML segue quindi un ordine di vendita (dolore → risultato → offerta → prezzo → garanzia → scadenza), non quello dei capitoli. Hormozi scrive «il dolore è la presentazione» (cap. 4): la prima slide dopo la copertina è il problema di Learnis, con i loro numeri.
 
 ## Indice delle proposte
 

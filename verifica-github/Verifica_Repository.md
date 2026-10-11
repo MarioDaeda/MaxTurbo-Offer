@@ -66,7 +66,7 @@ I due moduli sono JavaScript puro, senza dipendenze e senza AI. Funzionano sia n
   - richieste di aiuto
 
   Ogni punteggio arriva con i motivi in italiano e un'azione suggerita al tutor. Pesi e soglie sono ipotesi da tarare con i dati del pilota.
-- **[`moduli/moduli.test.js`](moduli/moduli.test.js)**: 10 test, tutti verdi.
+- **[`moduli/moduli.test.js`](moduli/moduli.test.js)**: 11 test, tutti verdi.
 
 ```bash
 node --test verifica-github/moduli/moduli.test.js

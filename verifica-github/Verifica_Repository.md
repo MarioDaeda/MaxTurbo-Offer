@@ -74,6 +74,6 @@ node --test verifica-github/moduli/moduli.test.js
 
 ## Attribuzioni
 
-- FSRS-4.5: formule e pesi di [open-spaced-repetition/fsrs4.5](https://github.com/open-spaced-repetition/fsrs4.5), licenza MIT.
+- FSRS-4.5: formule e pesi dalla [descrizione ufficiale dell'algoritmo](https://github.com/open-spaced-repetition/awesome-fsrs/wiki/The-Algorithm) di open-spaced-repetition (progetto MIT). Unica aggiunta nostra: dopo un oblio la stabilità non può superare quella precedente.
 - Segnali comportamentali: ispirati a [zijinz456/OpenTutor](https://github.com/zijinz456/OpenTutor), `apps/api/services/cognitive_load.py`, licenza MIT. Nessuna riga copiata.
 - SocraticLM e GuideEval: citati come riferimento metodologico; nessun dato incluso.

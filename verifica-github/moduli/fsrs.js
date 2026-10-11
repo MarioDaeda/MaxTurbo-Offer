@@ -2,7 +2,7 @@
  * FSRS-4.5 (Free Spaced Repetition Scheduler): calcola quando ripassare una scheda.
  *
  * Implementazione scritta da zero sulle formule pubbliche di FSRS-4.5
- * (open-spaced-repetition, licenza MIT: https://github.com/open-spaced-repetition/fsrs4.5).
+ * (open-spaced-repetition, licenza MIT: https://github.com/open-spaced-repetition/awesome-fsrs/wiki/The-Algorithm).
  * Il modulo di OpenTutor (zijinz456/OpenTutor, MIT) è stato letto ma non copiato:
  * mescola la formula FSRS-5 della difficoltà iniziale con i pesi di FSRS-4, e così
  * le risposte "Bene" e "Facile" finiscono entrambe alla difficoltà minima.
@@ -65,7 +65,7 @@
 
   function stabilitaDopoOblio(d, s, r, w = PESI) {
     const nuova = w[11] * Math.pow(d, -w[12]) * (Math.pow(s + 1, w[13]) - 1) * Math.exp((1 - r) * w[14]);
-    // dimenticare non può rendere il ricordo più stabile di prima
+    // scelta nostra, non nelle formule ufficiali: dimenticare non può rendere il ricordo più stabile di prima
     return Math.max(Math.min(nuova, s), 0.1);
   }
 

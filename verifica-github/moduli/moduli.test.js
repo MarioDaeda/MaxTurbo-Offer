@@ -98,6 +98,15 @@ test("segnali: tanti errori e richieste di aiuto alzano il rischio anche se prat
   assert.match(r.azione, /esempio guidato/);
 });
 
+test("segnali: chi non ha mai iniziato è a rischio alto; chi ha dimezzato le sessioni almeno medio", () => {
+  const mai = corsista("Mai", []);
+  assert.equal(Segnali.valuta(mai, mai.ora).livello, "alto");
+  const corte = corsista("Corte", [13, 11, 9, 5, 3, 1], { minuti: [35, 32, 34, 14, 11, 9] });
+  const r = Segnali.valuta(corte, corte.ora);
+  assert.equal(r.livello, "medio");
+  assert.match(r.azione, /più corte/);
+});
+
 test("classifica: il più a rischio viene per primo", () => {
   const a = corsista("Attivo", [6, 5, 3, 2, 1, 0.5]);
   const b = corsista("Fermo", [13, 12, 11, 10]);

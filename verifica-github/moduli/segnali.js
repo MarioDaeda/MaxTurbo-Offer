@@ -97,26 +97,38 @@
     punteggio = Math.round(limita01(punteggio) * 100) / 100;
 
     let livello = punteggio >= SOGLIE.alto ? "alto" : punteggio >= SOGLIE.medio ? "medio" : "basso";
-    // Chi pratica ma sbaglia quasi sempre o si blocca di continuo non è "a posto",
-    // anche se il punteggio pesato resta basso: è il prossimo a mollare.
-    if (livello === "basso" && (segnali.errori >= 0.6 || segnali.richieste_aiuto >= 0.8)) livello = "medio";
-    return { nome: corsista.nome, punteggio, livello, segnali, motivi, azione: azioneSuggerita(livello, segnali) };
+    // Un solo segnale molto forte basta a non lasciare il corsista in "basso", anche se il
+    // punteggio pesato resta basso: chi sbaglia quasi sempre, si blocca di continuo o ha
+    // dimezzato le sessioni è il prossimo a mollare.
+    if (livello === "basso" && (segnali.errori >= 0.6 || segnali.richieste_aiuto >= 0.8 || segnali.sessioni_brevi >= 0.5)) livello = "medio";
+    // Chi non ha mai iniziato va contattato subito.
+    if (!sessioni.length) livello = "alto";
+    const azione = sessioni.length
+      ? azioneSuggerita(livello, segnali)
+      : "Presentargli il Preparatore AI nella prossima sessione e fare insieme il primo esercizio.";
+    return { nome: corsista.nome, punteggio, livello, segnali, motivi, azione };
   }
 
   function azioneSuggerita(livello, s) {
     if (livello === "basso") return "Nessuna azione: sta praticando con regolarità.";
     if (s.inattivita >= 0.6) return "Un messaggio personale del tutor entro 24 ore, con un compito breve per ripartire.";
     if (s.errori >= 0.5 || s.richieste_aiuto >= 0.6) return "Nella prossima sessione riprendere la tecnica su cui sbaglia, con un esempio guidato.";
+    if (s.sessioni_brevi >= 0.5) return "Chiedergli cosa è cambiato: le sessioni sono molto più corte del solito.";
     if (s.ripassi_saltati >= 0.5) return "Proporre un ripasso di 10 minuti sui concetti più a rischio.";
     return "Tenere d'occhio: chiedere nella prossima sessione come sta andando lo studio a casa.";
   }
 
-  /** Ordina i corsisti dal più a rischio al meno a rischio. */
-  function classifica(corsisti, ora = Date.now()) {
-    return corsisti.map((c) => valuta(c, ora)).sort((a, b) => b.punteggio - a.punteggio);
+  const RANGO = { alto: 0, medio: 1, basso: 2 };
+  /** Ordina dal più a rischio: prima per livello, poi per punteggio. */
+  function confronta(a, b) {
+    return RANGO[a.livello] - RANGO[b.livello] || b.punteggio - a.punteggio;
   }
 
-  const Segnali = { PESI, SOGLIE, valuta, classifica };
+  function classifica(corsisti, ora = Date.now()) {
+    return corsisti.map((c) => valuta(c, ora)).sort(confronta);
+  }
+
+  const Segnali = { PESI, SOGLIE, valuta, classifica, confronta };
   if (typeof module !== "undefined" && module.exports) module.exports = Segnali;
   else root.Segnali = Segnali;
 })(typeof globalThis !== "undefined" ? globalThis : this);

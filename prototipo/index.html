@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preparatore AI · prototipo</title>
+  <meta name="description" content="Simulazione cliccabile della prova gratuita e del copilota del tutor proposti a Learnis. Nessuna AI attiva.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@500;700&family=Archivo:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+  <header class="testata">
+    <div class="testata-riga">
+      <p class="marchio">Preparatore AI</p>
+      <p class="per">Prototipo per Learnis</p>
+    </div>
+    <p class="simulazione" role="note"><strong>Simulazione dimostrativa: nessuna AI attiva.</strong> Le risposte sono scritte in anticipo per mostrare come funzionerà.</p>
+    <nav class="schede" aria-label="Viste del prototipo">
+      <button class="scheda" data-vista="prova" aria-current="page">Prova gratuita</button>
+      <button class="scheda" data-vista="copilota">Copilota del tutor</button>
+      <button class="scheda" data-vista="cruscotto">Cruscotto del tutor</button>
+      <button class="scheda" data-vista="report">Report alla famiglia</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================================================ PROVA GRATUITA -->
+    <section class="vista" id="vista-prova" aria-labelledby="t-prova">
+      <div class="ingresso" id="ingresso">
+        <h1 id="t-prova">Fotografa una pagina.<br>Esci con la mappa.</h1>
+        <p class="lead">Il metodo Learnis applicato al tuo libro, in un quarto d'ora. Il Preparatore AI non ti dà le risposte: ti fa le domande giuste.</p>
+
+        <fieldset class="eta" id="eta">
+          <legend>Prima di iniziare: quanti anni hai?</legend>
+          <button class="bottone" data-eta="14">Ho 14 anni o più</button>
+          <button class="bottone secondario" data-eta="13">Ho meno di 14 anni e c'è un genitore con me</button>
+        </fieldset>
+
+        <div class="carica" id="carica" hidden>
+          <p class="nota-eta" id="nota-eta"></p>
+          <label class="bottone file">
+            <input type="file" accept="image/*" capture="environment" id="foto">
+            Carica la foto della pagina
+          </label>
+          <button class="bottone secondario" id="esempio">Usa la pagina d'esempio</button>
+          <p class="piccolo">Nella prova non serve un account e niente viene salvato: chiudi la pagina e la foto sparisce.</p>
+        </div>
+      </div>
+
+      <div class="lavoro" id="lavoro" hidden>
+        <details class="pannello pagina" open>
+          <summary>La pagina</summary>
+          <div id="foto-utente" class="foto-utente" hidden></div>
+          <article class="libro" id="libro" aria-label="Pagina d'esempio"></article>
+        </details>
+
+        <section class="pannello dialogo" aria-labelledby="t-dialogo">
+          <h2 id="t-dialogo" class="nascosto">Dialogo con il Preparatore AI</h2>
+          <ol class="alcuore" id="alcuore" aria-label="Fasi del metodo ALCUORE"></ol>
+          <p class="ai-avviso">Stai parlando con un'intelligenza artificiale.</p>
+          <div class="chat" id="chat" aria-live="polite"></div>
+          <div class="opzioni" id="opzioni"></div>
+        </section>
+
+        <section class="pannello mappa" aria-labelledby="t-mappa">
+          <h2 id="t-mappa">La tua mappa</h2>
+          <p class="obiettivo" id="obiettivo" hidden></p>
+          <svg id="svg-mappa" viewBox="-35 -15 710 475" role="img" aria-label="Mappa concettuale della fotosintesi, si costruisce mentre rispondi"></svg>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================================================ COPILOTA -->
+    <section class="vista" id="vista-copilota" aria-labelledby="t-copilota" hidden>
+      <div class="intro">
+        <h1 id="t-copilota">Prepara la sessione di giovedì</h1>
+        <p class="lead">Il copilota legge profilo, compiti e dialoghi della settimana e scrive una bozza. Tu la correggi e la approvi: decidi sempre tu.</p>
+      </div>
+      <div class="due-colonne">
+        <aside class="pannello" id="scheda-corsista"></aside>
+        <section class="pannello" aria-label="Bozza della sessione">
+          <div class="tempo" id="tempo"></div>
+          <button class="bottone" id="prepara">Prepara la bozza</button>
+          <div id="bozza" hidden></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============================================================ CRUSCOTTO -->
+    <section class="vista" id="vista-cruscotto" aria-labelledby="t-cruscotto" hidden>
+      <div class="intro">
+        <h1 id="t-cruscotto">I tuoi corsisti, oggi</h1>
+        <p class="lead" id="riepilogo"></p>
+      </div>
+      <ul class="elenco-corsisti" id="elenco-corsisti"></ul>
+      <p class="piccolo">Il rischio è calcolato con regole scritte e leggibili (sei segnali con pesi espliciti, nessuna AI), e i ripassi con l'algoritmo FSRS. Pesi e soglie sono ipotesi da tarare nel pilota. Corsisti e dati sono inventati.</p>
+    </section>
+
+    <!-- ============================================================ REPORT -->
+    <section class="vista" id="vista-report" aria-labelledby="t-report" hidden>
+      <div class="intro">
+        <h1 id="t-report">Il report che riceve la famiglia</h1>
+        <p class="lead">Ogni settimana, per email. Racconta l'abitudine allo studio, non le conversazioni: quelle restano tra il ragazzo e il suo Preparatore.</p>
+      </div>
+      <article class="email" id="email"></article>
+    </section>
+  </main>
+
+  <footer class="piede">
+    <p>Prototipo senza AI: tutte le risposte sono in <code>data/scenario.js</code>. Testi, profili e corsisti sono segnaposto da sostituire con materiali approvati da Learnis.</p>
+  </footer>
+
+  <script src="../verifica-github/moduli/fsrs.js"></script>
+  <script src="../verifica-github/moduli/segnali.js"></script>
+  <script src="data/scenario.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

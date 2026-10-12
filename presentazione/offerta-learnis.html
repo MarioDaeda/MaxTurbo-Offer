@@ -103,7 +103,11 @@ mark { background: linear-gradient(transparent 45%, var(--giallo) 45%); color: i
 /* ------------------------------------------------ elenchi a due colonne */
 .coppie { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem 2rem; margin-top: 0.5rem; }
 .coppie > div { min-width: 0; border-top: 3px solid var(--bordo); padding-top: 0.9rem; }
-.coppie > div.problema { border-top-color: var(--rosso); }
+.coppie > div.opportunita { border-top-color: var(--azzurro); }
+/* sezione ancora da riscrivere: fondo rosso ben visibile */
+.sezione.da-modificare { background: color-mix(in srgb, var(--rosso) 25%, var(--sfondo)); outline: 3px dashed var(--rosso); outline-offset: -3px; padding-inline: 1.25rem; }
+.avviso-modifica { display: inline-block; background: var(--rosso); color: #fff; font: 700 0.85rem/1 var(--f-stretto); padding: 0.4rem 0.6rem; border-radius: 3px; }
+.coppie > div.bonus-vuoto { border-top-color: var(--oro); }
 .coppie > div.risultato { border-top-color: var(--verde); }
 .coppie p { color: var(--tenue); }
 .coppie .cifra { font: 400 1.9rem/1.05 var(--f-display); color: var(--inchiostro); margin-bottom: 0.35rem; }
@@ -224,7 +228,7 @@ body.slide .copertina, body.slide .chiusura { min-height: calc(100vh - 2rem); ma
     <ol id="voci">
       <li><a href="#copertina">Il Preparatore AI</a></li>
       <li><a href="#voi">Cosa abbiamo capito di voi</a></li>
-      <li><a href="#costo">Cosa costa restare così</a></li>
+      <li><a href="#costo">Dove possiamo crescere insieme</a></li>
       <li><a href="#risultato">Il risultato</a></li>
       <li><a href="#studia">Perché non è un altro StudIA</a></li>
       <li><a href="#offerta">L'offerta</a></li>
@@ -260,47 +264,48 @@ body.slide .copertina, body.slide .chiusura { min-height: calc(100vh - 2rem); ma
     <section class="sezione" id="voi" aria-labelledby="h-voi">
       <p class="numero">2</p>
       <h2 id="h-voi">Cosa abbiamo capito di voi</h2>
-      <p class="lead">Learnis è nata l'8 settembre 2026 e riunisce le reti che da quasi vent'anni insegnano il metodo Genio in 21 Giorni: oltre 50 centri in tre paesi, oltre 5.000 partecipanti l'anno, 33 centri in Italia. Il metodo funziona. Il problema che ci avete indicato come primo è un altro.</p>
+      <p class="lead">Learnis è nata l'8 settembre 2026 e riunisce le reti che da quasi vent'anni insegnano il metodo Genio in 21 Giorni: oltre 50 centri in tre paesi, oltre 5.000 partecipanti l'anno, 33 centri in Italia. Il metodo funziona e Rimini lo dimostra ogni anno. Insieme vogliamo farlo arrivare a più famiglie, partendo dalla priorità che ci avete indicato.</p>
 
       <div class="demo">
         <figure>
           <div class="punti" role="img" aria-label="Dieci persone in demo, due si iscrivono">
             <span class="iscritto"></span><span class="iscritto"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
-          <figcaption><strong>Meno di 2 iscritti al mese</strong>A Rimini arrivano in demo meno di 10 persone al mese, in circa 3 demo, e si iscrive circa il 20%.</figcaption>
+          <figcaption><strong>Circa 2 iscritti su 10 in demo</strong>A Rimini arrivano meno di 10 persone al mese, in circa 3 demo. È la base da cui partiamo insieme.</figcaption>
         </figure>
         <figure>
-          <div class="punti" role="img" aria-label="Meno di una persona su venti usa ancora l'app dopo 90 giorni">
+          <div class="punti" role="img" aria-label="Una persona su venti usa ancora l'app dopo 90 giorni">
             <span class="iscritto"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
-          <figcaption><strong>Meno del 5% a 90 giorni</strong>Dopo tre mesi quasi nessun corsista usa più l'app Learnis Mind per esercitarsi.</figcaption>
+          <figcaption><strong>L'app dopo il corso</strong>Learnis Mind c'è già: a 90 giorni la usa meno del 5% dei corsisti. Lì c'è spazio per accompagnarli di più.</figcaption>
         </figure>
       </div>
 
       <div class="coppie">
-        <div><h3>State puntando sui social</h3><p>E state aggiungendo demo online a quelle in sede. Servirà qualcosa da far provare a chi arriva da un post.</p></div>
-        <div><h3>I tutor si preparano gratis</h3><p>Per ogni ora di sessione pagata 20 € ne serve almeno un'altra di preparazione, non pagata, affiancati da un istruttore che ha poco tempo.</p></div>
-        <div><h3>L'AI è già passata da voi</h3><p>StudIA ha deluso, e LEARNIS AI Study è un corso di due giorni senza seguito. Ogni proposta AI parte con un'obiezione in più.</p></div>
+        <div><h3>Social e demo online</h3><p>State affiancando le demo online a quelle in sede: è il canale giusto, e possiamo aiutarvi a dargli qualcosa da far provare.</p></div>
+        <div><h3>Preparatori molto dedicati</h3><p>Per ogni ora di sessione ne investono almeno un'altra nella preparazione, con l'istruttore al loro fianco. Vogliamo restituire loro parte di quel tempo.</p></div>
+        <div><h3>Esperienza con l'AI</h3><p>Con StudIA e LEARNIS AI Study avete già sperimentato. Da quell'esperienza sappiamo cosa serve: un'AI al servizio del metodo e dei tutor.</p></div>
       </div>
     </section>
 
     <!-- 3 --------------------------------------------------------------------------- -->
     <section class="sezione" id="costo" aria-labelledby="h-costo">
       <p class="numero">3</p>
-      <h2 id="h-costo">Cosa costa restare così</h2>
-      <p class="lead">Ogni mese senza cambiare qualcosa ha un prezzo, anche se non compare in nessun bilancio.</p>
+      <h2 id="h-costo">Dove possiamo crescere insieme</h2>
+      <p class="lead">Quattro opportunità concrete, con i numeri che ci avete condiviso.</p>
       <div class="coppie">
-        <div class="problema"><p class="cifra">33.600 €</p><h3>l'anno per ogni corsista al mese che manca</h3><p>Un iscritto in più al mese in una sede vale 12 corsi da 2.800 €. Su 33 sedi sono circa 1,1 milioni l'anno.</p></div>
-        <div class="problema"><p class="cifra">10 € l'ora</p><h3>quanto guadagna davvero un tutor</h3><p>20 € per un'ora di sessione divisi per due ore di lavoro. A Rimini sono attivi 4 Preparatori su 6: tenerli motivati conta.</p></div>
-        <div class="problema"><p class="cifra">8 ore</p><h3>di follow-up che non lasciano un'abitudine</h3><p>Tutti i corsisti le fanno. Tra una sessione e l'altra, a casa, il metodo resta da solo.</p></div>
-        <div class="problema"><p class="cifra">0 €</p><h3>il prezzo dell'alternativa</h3><p>Un assistente AI generico è gratuito e risponde a tutto. Rischia di far sembrare superfluo un metodo di studio.</p></div>
+        <div class="opportunita"><p class="cifra">33.600 €</p><h3>l'anno per ogni iscritto in più al mese</h3><p>Un iscritto in più al mese in una sede vale 12 corsi da 2.800 €. Su 33 sedi sono circa 1,1 milioni l'anno.</p></div>
+        <div class="opportunita"><p class="cifra">10 € l'ora</p><h3>il valore di ogni ora restituita ai tutor</h3><p>Oggi un'ora di sessione da 20 € richiede circa due ore di lavoro. Ridurre la preparazione aiuta i 4 Preparatori attivi a Rimini a crescere con voi.</p></div>
+        <div class="opportunita"><p class="cifra">8 ore</p><h3>di follow-up da valorizzare ancora di più</h3><p>Tutti i corsisti le fanno. Possiamo accompagnarli anche tra una sessione e l'altra, a casa.</p></div>
+        <div class="opportunita"><p class="cifra">0 €</p><h3>il prezzo degli assistenti AI generici</h3><p>I ragazzi li usano già. Un'AI con il vostro metodo dentro trasforma questa abitudine in un vantaggio per Learnis.</p></div>
       </div>
     </section>
 
     <!-- 4 --------------------------------------------------------------------------- -->
-    <section class="sezione" id="risultato" aria-labelledby="h-risultato">
+    <section class="sezione da-modificare" id="risultato" aria-labelledby="h-risultato">
       <p class="numero">4</p>
+      <p class="avviso-modifica">Sezione da modificare</p>
       <h2 id="h-risultato">Il risultato: più iscritti dalle stesse demo</h2>
       <p class="lead">Lo stesso numero di persone in demo, una famiglia in più che dice sì. A Rimini basta passare dal 20% al 30% di conversione per avere un corso in più al mese.</p>
 
@@ -439,11 +444,11 @@ body.slide .copertina, body.slide .chiusura { min-height: calc(100vh - 2rem); ma
       <h2 id="h-bonus">Cosa aggiungiamo senza toccare il prezzo</h2>
       <p class="lead">Non scontiamo il pilota. Aggiungiamo ciò che vi serve per vendere e per partire tranquilli.</p>
       <div class="coppie">
-        <div><h3>La prova gratuita per i social</h3><p>La foto di una pagina diventa una mappa col metodo, per genitori e ragazzi dai 14 anni, più un kit per mostrarla dal vivo nelle demo in sede. Porta alla demo chi vuole il percorso completo.</p></div>
-        <div><h3>Il kit di conformità</h3><p>Informative per corsisti e genitori, registro dei trattamenti, valutazione d'impatto, analisi AI Act. Meno lavoro per il vostro legale.</p></div>
-        <div><h3>Spagna e Stati Uniti</h3><p>Il prototipo anche in spagnolo e inglese, banco di prova per le reti dove tutto è già online.</p></div>
-        <div><h3>Studiare con l'AI, con metodo</h3><p>Un modulo nuovo per i vostri corsi: il seguito naturale di LEARNIS AI Study.</p></div>
-        <div><h3>Uno studio di efficacia</h3><p>Con un ateneo partner, nella vostra tradizione di ricerca con il CNR. <span class="ipotesi">da confermare</span></p></div>
+        <div class="bonus-vuoto"><h3>Bonus 1</h3></div>
+        <div class="bonus-vuoto"><h3>Bonus 2</h3></div>
+        <div class="bonus-vuoto"><h3>Bonus 3</h3></div>
+        <div class="bonus-vuoto"><h3>Bonus 4</h3></div>
+        <div class="bonus-vuoto"><h3>Bonus 5</h3></div>
       </div>
     </section>
 

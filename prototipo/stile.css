@@ -120,8 +120,6 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 16px 3rem; }
 .pannello { background: var(--superficie); border: 1px solid var(--bordo); border-radius: var(--raggio); padding: 1.1rem; box-shadow: var(--ombra); }
 .pagina { position: sticky; top: 1rem; }
 .pagina summary { font: 700 1.3rem/1.2 var(--stretto); cursor: pointer; margin-bottom: 0.75rem; }
-.foto-utente { margin-bottom: 0.75rem; font-size: 0.875rem; color: var(--inchiostro-tenue); }
-.foto-utente img { display: block; max-width: 100%; max-height: 140px; border-radius: var(--raggio); margin-bottom: 0.4rem; border: 1px solid var(--bordo); }
 
 .libro { background: var(--carta); color: #2b2b2b; border: 1px solid #e7e1cf; padding: 1.25rem 1.25rem 1rem; font: 400 1.02rem/1.7 var(--libro); }
 .libro .materia { font: 500 0.8rem/1.2 var(--stretto); color: #7a6f4a; margin-bottom: 0.25rem; }

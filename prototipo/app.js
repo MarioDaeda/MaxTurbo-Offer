@@ -48,24 +48,13 @@
       const sotto14 = b.dataset.eta === "13";
       $("#nota-eta").textContent = sotto14
         ? "Sotto i 14 anni la prova si fa con un genitore accanto: è lui o lei a decidere se continuare."
-        : "Perfetto. Carica la foto di una pagina che devi studiare, oppure prova con la nostra.";
+        : "Perfetto. Ti abbiamo preparato una pagina sulla fotosintesi: la studiamo insieme.";
       $("#carica").hidden = false;
       $("#eta").disabled = true;
       $("#carica .bottone").focus();
     })
   );
 
-  $("#foto").addEventListener("change", (e) => {
-    const file = e.target.files && e.target.files[0];
-    if (!file) return;
-    const box = $("#foto-utente");
-    box.replaceChildren(
-      crea("img", { src: URL.createObjectURL(file), alt: "La foto che hai caricato" }),
-      crea("p", { text: "Questa è la tua foto. Nella simulazione il Preparatore lavora sulla pagina d'esempio qui sotto: con l'AI attiva leggerebbe la tua." })
-    );
-    box.hidden = false;
-    avviaProva();
-  });
   $("#esempio").addEventListener("click", avviaProva);
 
   function avviaProva() {

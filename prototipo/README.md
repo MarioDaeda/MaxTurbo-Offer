@@ -16,7 +16,7 @@ Poi apri <http://localhost:8765/prototipo/>. Funziona anche con un doppio clic s
 
 | Vista | Cosa mostra | Sezione della proposta |
 |---|---|---|
-| **Prova gratuita** | Domanda sull'età, foto di una pagina (o pagina d'esempio), dialogo socratico sulle sette fasi ALCUORE, la pagina che si evidenzia e la mappa che si costruisce a ogni risposta giusta, chiamata finale alla demo | IV.4 bonus vendite, III.2 valore prima della firma |
+| **Prova gratuita** | Domanda sull'età, pagina già pronta, dialogo socratico sulle sette fasi ALCUORE, la pagina che si evidenzia e la mappa che si costruisce a ogni risposta giusta, chiamata finale alla demo | IV.4 bonus vendite, III.2 valore prima della firma |
 | **Copilota del tutor** | Profilo, compiti e blocchi della settimana di una corsista; bozza della sessione da 60 minuti che il tutor modifica e approva; preparazione da 60 a 20 minuti | III.4, KPI tempo di preparazione |
 | **Cruscotto del tutor** | Sei corsisti ordinati per rischio di abbandono, con motivi in chiaro, azione suggerita e ripassi in ritardo. Calcolato davvero da [`segnali.js`](../verifica-github/moduli/segnali.js) e [`fsrs.js`](../verifica-github/moduli/fsrs.js) | IV.5 KPI uso a 30 e 60 giorni |
 | **Report alla famiglia** | Email settimanale: giorni di studio, minuti, tecniche usate, ripassi, nota del Preparatore. Senza conversazioni | III.3, conformità |
@@ -24,7 +24,7 @@ Poi apri <http://localhost:8765/prototipo/>. Funziona anche con un doppio clic s
 ## Copione della demo (10 minuti)
 
 1. **Apri la prova gratuita.** «Questa è la pagina che un genitore trova da un post sui social o in una demo online.» Fai notare la striscia "Stai parlando con un'intelligenza artificiale": è l'obbligo dell'AI Act in vigore da agosto.
-2. **Scegli "Ho 14 anni o più" e poi "Usa la pagina d'esempio".** Se hai il telefono, carica la foto di una pagina vera: si vede che la prova accetta la foto.
+2. **Scegli "Ho 14 anni o più" e poi "Inizia con la pagina".** La pagina è già pronta: la prova punta sul dialogo con il metodo, non sul caricamento di foto.
 3. **Al passo Lettura scegli prima la risposta sbagliata** ("Di come le piante respirano"). «Non dà la soluzione: fa un'altra domanda. È la differenza con ChatGPT, e con StudIA.»
 4. **Prosegui fino alla fine.** Mostra la pagina che si evidenzia, la mappa che cresce e le lettere ALCUORE che si accendono. «È il loro metodo, non un chatbot generico.»
 5. **Clicca "Prenota la demo gratuita".** «Qui la prova diventa un appuntamento: è il KPI "demo prenotate grazie alla prova".»

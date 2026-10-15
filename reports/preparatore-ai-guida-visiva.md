@@ -119,6 +119,12 @@ L'unica differenza è il passaggio dalla biblioteca del metodo. Se il manuale ca
 
 Condizioni: dialoghi veri approvati dai tutor e raccolti con consenso, un set di valutazione di 100 casi, e il modello addestrato deve battere la versione con solo RAG. Il calcolo costa poco; costa preparare e validare i dati.
 
+**Perché è sconsigliato partire da qui.**
+
+- **Si riparte da zero a ogni nuovo modello.** Il fine-tuning è legato al modello di partenza. Quando esce un modello base migliore, e succede ogni pochi mesi, l'addestramento va rifatto da capo. Il RAG invece si sposta sul nuovo modello così com'è.
+- **Si può peggiorare la situazione.** Un modello addestrato su pochi esempi può impararli a memoria e perdere capacità che prima aveva: ragionare, capire domande impreviste, rispondere bene fuori dagli esempi.
+- **Non c'è un numero che dice se è andato bene.** Durante l'addestramento si guarda un valore matematico, l'errore sugli esempi, che scende. Ma che scenda non significa che il tutor sia diventato migliore: dice solo che imita meglio gli esempi. Se un dialogo è davvero utile allo studente lo possono giudicare solo i Preparatori, leggendo le risposte caso per caso. È una verifica lenta e costosa, da rifare a ogni addestramento.
+
 | «Abbiamo fatto 1000 cicli» può voler dire | Cosa significa | Giudizio |
 |---|---|---|
 | 1000 passi di addestramento | Il modello viene corretto 1000 volte su piccoli gruppi di esempi | Normale: ore su una sola GPU |
@@ -479,11 +485,6 @@ Solo con una licenza dell'editore. In alternativa si usano schede scritte da zer
 <details><summary>Se l'AI risponde male, cosa controlli per primo?</summary>
 
 Quali brani ha recuperato: nella maggior parte dei casi l'errore nasce nella ricerca, non nella scrittura della risposta.
-</details>
-
-<details><summary>Un concorrente dice di aver fatto «1000 cicli» di addestramento: cosa chiedi?</summary>
-
-Su quali dati, come misurano che il modello addestrato è migliore di quello di partenza, cosa fanno quando cambia il materiale e con quale consenso usano i dati degli studenti. Il numero da solo non dice nulla sulla qualità.
 </details>
 
 ---

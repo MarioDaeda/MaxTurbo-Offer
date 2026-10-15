@@ -293,6 +293,10 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <p><strong>Per i contenuti del metodo, no.</strong> Il fine-tuning insegna male i fatti e ogni modifica al manuale richiederebbe un nuovo addestramento. I contenuti restano al RAG.</p>
     <p><strong>Per il comportamento, sì, ma dopo il pilota.</strong> Lo stile del Preparatore (domande socratiche, niente compiti svolti, rispetto delle fasi) si può insegnare con un fine-tuning leggero (LoRA), che permette anche un modello più piccolo ed economico. Il risultato finale è <em>fine-tuning + RAG</em>: lo stile dal primo, i contenuti dal secondo.</p>
     <p>Condizioni: dialoghi veri approvati dai tutor e raccolti con consenso, un set di valutazione di 100 casi, e il modello addestrato deve battere la versione con solo RAG. Il calcolo costa poco; costa preparare e validare i dati.</p>
+    <p><strong>Perché è sconsigliato partire da qui.</strong></p>
+    <p><strong>Si riparte da zero a ogni nuovo modello.</strong> Il fine-tuning è legato al modello di partenza. Quando esce un modello base migliore, e succede ogni pochi mesi, l'addestramento va rifatto da capo. Il RAG invece si sposta sul nuovo modello così com'è.</p>
+    <p><strong>Si può peggiorare la situazione.</strong> Un modello addestrato su pochi esempi può impararli a memoria e perdere capacità che prima aveva: ragionare, capire domande impreviste, rispondere bene fuori dagli esempi.</p>
+    <p><strong>Non c'è un numero che dice se è andato bene.</strong> Durante l'addestramento si guarda un valore matematico, l'errore sugli esempi, che scende. Ma che scenda non significa che il tutor sia diventato migliore: dice solo che imita meglio gli esempi. Se un dialogo è davvero utile allo studente lo possono giudicare solo i Preparatori, leggendo le risposte caso per caso. È una verifica lenta e costosa, da rifare a ogni addestramento.</p>
   </div>
   <div class="risks">
     <div class="risk head"><span>«Abbiamo fatto 1000 cicli» può voler dire</span><span>Cosa significa</span><span>Giudizio</span></div>
@@ -853,7 +857,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
   <div class="read" style="display:grid;gap:12px">
     <span class="eyebrow">Parte 10</span>
     <h2>Verifica di aver capito</h2>
-    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 13 aperte</span></p>
+    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 12 aperte</span></p>
   </div>
   <div class="quiz read" id="quiz">
     <details><summary>Che differenza c'è tra RAG e fine-tuning?</summary><p>Il RAG è l'esame a libro aperto: a ogni domanda il sistema consulta il materiale. Il fine-tuning è studiare a memoria, cioè riaddestrare il modello. Il RAG è più facile da aggiornare e da controllare.</p></details>
@@ -867,7 +871,6 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <details><summary>Cosa chiede l'AI Act in questo caso?</summary><p>Trasparenza: un avviso chiaro che lo studente sta parlando con un'AI. Resta vietato riconoscere le emozioni degli studenti. Il GDPR invece continua a chiedere la massima protezione per i dati psicometrici.</p></details>
     <details><summary>Possiamo caricare nell'archivio il manuale del test AMOS?</summary><p>Solo con una licenza dell'editore. In alternativa si usano schede scritte da zero dallo psicologo. Domande e punteggi del test non entrano mai.</p></details>
     <details><summary>Se l'AI risponde male, cosa controlli per primo?</summary><p>Quali brani ha recuperato: nella maggior parte dei casi l'errore nasce nella ricerca, non nella scrittura della risposta.</p></details>
-    <details><summary>Un concorrente dice di aver fatto «1000 cicli» di addestramento: cosa chiedi?</summary><p>Su quali dati, come misurano che il modello addestrato è migliore di quello di partenza, cosa fanno quando cambia il materiale e con quale consenso usano i dati degli studenti. Il numero da solo non dice nulla sulla qualità.</p></details>
   </div>
 </section>
 

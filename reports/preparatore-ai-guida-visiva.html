@@ -287,6 +287,21 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <figcaption>L'unica differenza è il passaggio dalla biblioteca del metodo. Se il manuale cambia, si aggiorna il materiale e il giorno dopo l'AI usa la versione nuova, senza riaddestrare nulla.</figcaption>
   </figure>
   <div class="read note">L'alternativa si chiama <strong>fine-tuning</strong>: riaddestrare il modello sui propri testi, come far studiare a memoria. Costa di più, è difficile da correggere e, se fatto sulle conversazioni degli studenti, pone problemi di privacy. Per questo il progetto parte dal RAG.</div>
+
+  <div class="read" style="display:grid;gap:12px">
+    <h3>Fine-tuning: quando sì e quando no</h3>
+    <p><strong>Per i contenuti del metodo, no.</strong> Il fine-tuning insegna male i fatti e ogni modifica al manuale richiederebbe un nuovo addestramento. I contenuti restano al RAG.</p>
+    <p><strong>Per il comportamento, sì, ma dopo il pilota.</strong> Lo stile del Preparatore (domande socratiche, niente compiti svolti, rispetto delle fasi) si può insegnare con un fine-tuning leggero (LoRA), che permette anche un modello più piccolo ed economico. Il risultato finale è <em>fine-tuning + RAG</em>: lo stile dal primo, i contenuti dal secondo.</p>
+    <p>Condizioni: dialoghi veri approvati dai tutor e raccolti con consenso, un set di valutazione di 100 casi, e il modello addestrato deve battere la versione con solo RAG. Il calcolo costa poco; costa preparare e validare i dati.</p>
+  </div>
+  <div class="risks">
+    <div class="risk head"><span>«Abbiamo fatto 1000 cicli» può voler dire</span><span>Cosa significa</span><span>Giudizio</span></div>
+    <div class="risk"><span class="sym">1000 passi di addestramento</span><span class="cause">Il modello viene corretto 1000 volte su piccoli gruppi di esempi</span><span class="fix">Normale: ore su una sola GPU</span></div>
+    <div class="risk"><span class="sym">1000 esempi nel dataset</span><span class="cause">1000 conversazioni modello</span><span class="fix">Dataset piccolo ma ragionevole per uno stile</span></div>
+    <div class="risk"><span class="sym">1000 epoche</span><span class="cause">Rileggere tutto il dataset 1000 volte (di solito se ne fanno 1-5)</span><span class="fix">Sarebbe un errore: il modello impara a memoria e peggiora</span></div>
+    <div class="risk"><span class="sym">1000 prove di prompt</span><span class="cause">Istruzioni provate e corrette molte volte</span><span class="fix">Lavoro serio, ma non è fine-tuning</span></div>
+  </div>
+  <p class="read note">Il numero non dice nulla sulla qualità: conta come è stato valutato. Le domande giuste: su quali dati, come misurate che è migliore del modello di partenza, cosa fate quando cambia il materiale, con quale consenso usate i dati degli studenti.</p>
 </section>
 
 <!-- 4. SIGNIFICATO -->
@@ -838,7 +853,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
   <div class="read" style="display:grid;gap:12px">
     <span class="eyebrow">Parte 10</span>
     <h2>Verifica di aver capito</h2>
-    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 12 aperte</span></p>
+    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 13 aperte</span></p>
   </div>
   <div class="quiz read" id="quiz">
     <details><summary>Che differenza c'è tra RAG e fine-tuning?</summary><p>Il RAG è l'esame a libro aperto: a ogni domanda il sistema consulta il materiale. Il fine-tuning è studiare a memoria, cioè riaddestrare il modello. Il RAG è più facile da aggiornare e da controllare.</p></details>
@@ -852,6 +867,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <details><summary>Cosa chiede l'AI Act in questo caso?</summary><p>Trasparenza: un avviso chiaro che lo studente sta parlando con un'AI. Resta vietato riconoscere le emozioni degli studenti. Il GDPR invece continua a chiedere la massima protezione per i dati psicometrici.</p></details>
     <details><summary>Possiamo caricare nell'archivio il manuale del test AMOS?</summary><p>Solo con una licenza dell'editore. In alternativa si usano schede scritte da zero dallo psicologo. Domande e punteggi del test non entrano mai.</p></details>
     <details><summary>Se l'AI risponde male, cosa controlli per primo?</summary><p>Quali brani ha recuperato: nella maggior parte dei casi l'errore nasce nella ricerca, non nella scrittura della risposta.</p></details>
+    <details><summary>Un concorrente dice di aver fatto «1000 cicli» di addestramento: cosa chiedi?</summary><p>Su quali dati, come misurano che il modello addestrato è migliore di quello di partenza, cosa fanno quando cambia il materiale e con quale consenso usano i dati degli studenti. Il numero da solo non dice nulla sulla qualità.</p></details>
   </div>
 </section>
 

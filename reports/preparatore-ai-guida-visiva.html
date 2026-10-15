@@ -181,6 +181,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <li><a href="#percorso">Il percorso completo</a></li>
     <li><a href="#scelte">Le scelte di fondo</a></li>
     <li><a href="#privacy">Privacy e regole</a></li>
+    <li><a href="#fonti">Fonti e copyright</a></li>
     <li><a href="#errori">Cosa va storto</a></li>
     <li><a href="#verifica">Verifica</a></li>
   </ul>
@@ -207,7 +208,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <article class="prob p-persona">
       <h3>Personalizzare senza esporre</h3>
       <p>Il tutor deve sapere fase e profilo dello studente, ma i risultati dei test sono dati delicati.</p>
-      <span class="solve">→ Etichette di profilo e tre zone separate</span>
+      <span class="solve">→ Scheda dello psicologo e tre zone separate</span>
     </article>
     <article class="prob p-persona">
       <h3>Minorenni e dati psicologici</h3>
@@ -429,7 +430,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
         <line class="ln" x1="166" y1="206" x2="196" y2="206" marker-end="url(#ar)"/>
         <rect class="bx-p" x="198" y="182" width="150" height="48" rx="8"/>
         <text x="273" y="203" text-anchor="middle">Fase + profilo</text>
-        <text x="273" y="220" text-anchor="middle" class="s">etichette, non punteggi</text>
+        <text x="273" y="220" text-anchor="middle" class="s">scheda dello psicologo</text>
         <line class="ln" x1="348" y1="206" x2="378" y2="206" marker-end="url(#ar)"/>
         <rect class="bx" x="380" y="182" width="150" height="48" rx="8"/>
         <text x="455" y="211" text-anchor="middle">Ricerca ibrida</text>
@@ -458,7 +459,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
         <text x="91" y="318" text-anchor="middle" class="s">e corregge</text>
       </svg>
     </div>
-    <figcaption>Nella preparazione entra solo il materiale del metodo: nessun dato degli studenti. I dati personali (in rosa) servono solo al momento della risposta, e all'AI arrivano come etichette semplici, per esempio «ansia da prova», mai come punteggi grezzi dei test.</figcaption>
+    <figcaption>Nella preparazione entra solo il materiale del metodo: nessun dato degli studenti. I dati personali (in rosa) servono solo al momento della risposta, e all'AI arriva solo la scheda descrittiva scritta e approvata dallo psicologo, con un codice al posto del nome. Mai le risposte grezze del test AMOS.</figcaption>
   </figure>
 </section>
 
@@ -537,8 +538,8 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     </article>
     <article class="choice">
       <span class="tag">Persone</span>
-      <h3>Il tutor resta al comando</h3>
-      <p>Il profilo derivato dai test viene verificato da un tutor, che vede le risposte e può correggerle. È un valore per Learnis ed è ciò che chiedono le norme.</p>
+      <h3>Le persone decidono, l'AI esegue</h3>
+      <p>Il profilo lo costruisce e lo approva lo psicologo; il percorso lo decide il tutor. L'AI legge la scheda come contesto e adatta stile ed esercizi. È un valore per Learnis ed è ciò che tiene il sistema fuori dall'alto rischio.</p>
     </article>
   </div>
 
@@ -566,7 +567,7 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
   <div class="read" style="display:grid;gap:12px">
     <span class="eyebrow">Parte 7</span>
     <h2>Privacy e regole</h2>
-    <p>Non servono gli articoli a memoria. Servono quattro immagini: chi dà il consenso, dove si colloca il sistema per l'AI Act, cosa vuol dire cancellare e quali dati sono delicati.</p>
+    <p>Non servono gli articoli a memoria. Servono poche immagini: chi dà il consenso, chi costruisce il profilo, dove si colloca il sistema per l'AI Act e cosa vuol dire cancellare.</p>
   </div>
 
   <figure>
@@ -591,28 +592,81 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <figcaption>In Italia la soglia è 14 anni. Dal 2025 una legge italiana sull'IA usa la stessa soglia anche per l'accesso agli strumenti di intelligenza artificiale.</figcaption>
   </figure>
 
+  <div class="read" style="display:grid;gap:12px">
+    <h3>Chi costruisce il profilo: lo psicologo, non l'AI</h3>
+    <p>È il dettaglio che cambia tutto. Il test AMOS lo interpreta uno psicologo professionista, che scrive e approva una <strong>scheda descrittiva</strong>. L'AI riceve solo quella scheda, come informazione di contesto, e la usa per adattare lo stile delle risposte e gli esercizi proposti. Non analizza le risposte del test e non cataloga lo studente.</p>
+  </div>
   <figure>
     <div class="fig">
-      <svg viewBox="0 0 720 210" role="img" aria-label="Piramide dei rischi dell'AI Act: in cima le pratiche vietate, come riconoscere le emozioni a scuola; sotto l'alto rischio, dove si colloca probabilmente Preparatore AI; poi rischio limitato e minimo.">
+      <svg viewBox="0 0 720 190" role="img" aria-label="Il test AMOS va allo psicologo, che scrive una scheda descrittiva approvata; solo la scheda arriva al Preparatore AI, che adatta lo stile. Le risposte grezze del test non arrivano mai all'AI.">
+        <rect class="bx-p" x="10" y="30" width="150" height="52" rx="8"/>
+        <text x="85" y="52" text-anchor="middle" class="b">Test AMOS</text>
+        <text x="85" y="70" text-anchor="middle" class="s">risposte dello studente</text>
+        <line class="ln" x1="160" y1="56" x2="208" y2="56" marker-end="url(#ar)"/>
+        <rect class="bx" x="210" y="30" width="170" height="52" rx="8"/>
+        <text x="295" y="52" text-anchor="middle" class="b">Psicologo</text>
+        <text x="295" y="70" text-anchor="middle" class="s">interpreta e approva</text>
+        <line class="ln" x1="380" y1="56" x2="428" y2="56" marker-end="url(#ar)"/>
+        <rect class="bx-p" x="430" y="30" width="140" height="52" rx="8"/>
+        <text x="500" y="52" text-anchor="middle" class="b">Scheda</text>
+        <text x="500" y="70" text-anchor="middle" class="s">testo approvato</text>
+        <line class="ln" x1="570" y1="56" x2="598" y2="56" marker-end="url(#ar)"/>
+        <rect class="bx-a" x="600" y="30" width="110" height="52" rx="8"/>
+        <text x="655" y="52" text-anchor="middle" class="b">AI</text>
+        <text x="655" y="70" text-anchor="middle" class="s">adatta lo stile</text>
+
+        <path class="ln-p dash" d="M85 82 V140 H655 V84"/>
+        <line class="ln-p" x1="360" y1="130" x2="380" y2="150"/>
+        <line class="ln-p" x1="380" y1="130" x2="360" y2="150"/>
+        <text x="370" y="172" text-anchor="middle" class="s">mai: l'AI non vede le risposte grezze del test</text>
+      </svg>
+    </div>
+    <figcaption>Esempio di scheda: «Lo studente 412 ha difficoltà nella pianificazione del tempo e beneficia di mappe concettuali». Niente nome: nel prompt c'è solo il codice.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 210" role="img" aria-label="Piramide dei rischi dell'AI Act: in cima le pratiche vietate, come riconoscere le emozioni a scuola; alto rischio se l'AI profilasse, desse voti o decidesse percorsi; Preparatore AI è progettato per il rischio limitato.">
         <rect class="bx-p" x="160" y="10" width="140" height="40" rx="6"/>
         <text x="230" y="35" text-anchor="middle" class="b">Vietato</text>
-        <rect class="bx-a" x="110" y="58" width="240" height="40" rx="6"/>
+        <rect class="bx" x="110" y="58" width="240" height="40" rx="6"/>
         <text x="230" y="83" text-anchor="middle" class="b">Alto rischio</text>
-        <rect class="bx" x="60" y="106" width="340" height="40" rx="6"/>
-        <text x="230" y="131" text-anchor="middle">Rischio limitato</text>
+        <rect class="bx-m" x="60" y="106" width="340" height="40" rx="6"/>
+        <text x="230" y="131" text-anchor="middle" class="b">Rischio limitato</text>
         <rect class="bx" x="10" y="154" width="440" height="40" rx="6"/>
         <text x="230" y="179" text-anchor="middle">Rischio minimo</text>
 
         <line class="ln-p" x1="470" y1="30" x2="306" y2="30" marker-end="url(#ar-p)"/>
         <text x="478" y="27">Riconoscere le emozioni</text>
         <text x="478" y="42" class="s">degli studenti: già vietato</text>
-        <line class="ln" x1="470" y1="78" x2="356" y2="78" marker-end="url(#ar)"/>
-        <text x="478" y="75" class="b">Preparatore AI, probabilmente</text>
-        <text x="478" y="90" class="s">orienta lo studio e profila</text>
+        <line class="ln dash" x1="470" y1="78" x2="356" y2="78" marker-end="url(#ar)"/>
+        <text x="478" y="75">Se l'AI profilasse, desse voti</text>
+        <text x="478" y="90" class="s">o decidesse i percorsi</text>
+        <line class="ln-m" x1="470" y1="126" x2="406" y2="126" marker-end="url(#ar-m)"/>
+        <text x="478" y="123" class="b">Preparatore AI</text>
+        <text x="478" y="138" class="s">posizione di progetto</text>
       </svg>
     </div>
-    <figcaption>Alto rischio significa tre obblighi principali: tenere registri di cosa fa il sistema, garantire la supervisione umana e curare la qualità dei dati. Le scadenze sono state rinviate (secondo le fonti più recenti a fine 2027), ma prevederli da subito costa molto meno che aggiungerli dopo.</figcaption>
+    <figcaption>Il sistema non profila da solo, non dà voti, non seleziona e non decide percorsi: per questo è progettato per stare nel rischio limitato. È una posizione da confermare per iscritto con un legale, e regge solo finché valgono le condizioni qui sotto.</figcaption>
   </figure>
+
+  <div class="choices">
+    <article class="choice key">
+      <span class="tag">Per restare a rischio limitato</span>
+      <h3>Le condizioni da rispettare</h3>
+      <p>1. L'AI non profila: riceve la scheda scritta e approvata dallo psicologo.<br>
+      2. Non assegna voti e non fa selezioni.<br>
+      3. Non decide il percorso: decide il tutor.<br>
+      4. Non riconosce né valuta le emozioni.<br>
+      5. La valutazione del perché non è alto rischio va messa per iscritto prima di partire.</p>
+    </article>
+    <article class="choice">
+      <span class="tag">L'unico obbligo operativo</span>
+      <h3>Dire che è un'AI</h3>
+      <p>L'AI Act chiede trasparenza (art. 50): all'avvio della chat compare un avviso chiaro, per esempio:</p>
+      <p class="note" style="border-left-color:var(--metodo)">«Questo assistente virtuale usa le indicazioni del tuo tutor e del tuo psicologo di riferimento per aiutarti nello studio. Stai parlando con un'intelligenza artificiale, non con una persona.»</p>
+    </article>
+  </div>
 
   <figure>
     <div class="fig">
@@ -651,8 +705,20 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
 
   <div class="rules">
     <article class="rule">
-      <h3>Test AMOS: forse dati sensibili</h3>
-      <p>Un questionario sulle strategie di studio non è di per sé un dato sanitario. Lo diventa se fa capire qualcosa sulla salute, anche mentale. Il confine è sfumato: si progetta come se lo fosse.</p>
+      <h3>Rischio limitato non vuol dire dati leggeri</h3>
+      <p>L'AI Act guarda cosa fa il sistema; il GDPR guarda i dati. I profili psicometrici e attitudinali restano molto delicati e possono rivelare aspetti della salute: si trattano con la massima protezione.</p>
+    </article>
+    <article class="rule">
+      <h3>Un consenso specifico per l'AI</h3>
+      <p>Il modulo privacy firmato per il test AMOS deve contenere una clausola esplicita: i risultati, in forma di scheda, e le indicazioni del tutor vengono usati da un assistente basato su intelligenza artificiale.</p>
+    </article>
+    <article class="rule">
+      <h3>Nel prompt solo un codice</h3>
+      <p>Nella scheda passata all'AI non compaiono mai nome, cognome o codice fiscale, ma solo un identificativo interno (per esempio «Studente 412»).</p>
+    </article>
+    <article class="rule">
+      <h3>Nessun addestramento altrui</h3>
+      <p>I dati inseriti nei prompt non devono servire ad addestrare i modelli di nessun fornitore. Con un modello open-weight su server in UE è garantito per costruzione; con un servizio esterno va verificato nel contratto e nelle impostazioni.</p>
     </article>
     <article class="rule">
       <h3>Pseudonimizzare non è anonimizzare</h3>
@@ -670,10 +736,84 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
   <p class="read note">Questa parte non è consulenza legale: ruoli, basi giuridiche e tempi di conservazione si decidono con il DPO di Learnis.</p>
 </section>
 
-<!-- 8. ERRORI -->
-<section id="errori">
+<!-- 8. FONTI E COPYRIGHT -->
+<section id="fonti">
   <div class="read" style="display:grid;gap:12px">
     <span class="eyebrow">Parte 8</span>
+    <h2>Fonti e copyright</h2>
+    <p>Il RAG funziona bene solo se la biblioteca è buona. Ma non tutto quello che è utile si può caricare: i libri che spiegano il test AMOS, per esempio, sono di un editore e protetti dal diritto d'autore. Ogni fonte va controllata prima di entrare nell'archivio.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 290" role="img" aria-label="Quattro tipi di fonte: materiali ALCUORE entrano con autorizzazione scritta di Learnis; note originali dello psicologo entrano; il manuale AMOS di un editore entra solo con licenza; domande e punteggi del test non entrano mai.">
+        <rect class="bx-m" x="10" y="20" width="220" height="48" rx="8"/>
+        <text x="24" y="40" class="b">Materiali ALCUORE</text>
+        <text x="24" y="58" class="s">di Learnis</text>
+        <line class="ln-m" x1="230" y1="44" x2="558" y2="44" marker-end="url(#ar-m)"/>
+        <text x="394" y="36" text-anchor="middle" class="s">sì, con autorizzazione scritta</text>
+
+        <rect class="bx-m" x="10" y="90" width="220" height="48" rx="8"/>
+        <text x="24" y="110" class="b">Schede dello psicologo</text>
+        <text x="24" y="128" class="s">testo originale, scritto per noi</text>
+        <line class="ln-m" x1="230" y1="114" x2="558" y2="114" marker-end="url(#ar-m)"/>
+        <text x="394" y="106" text-anchor="middle" class="s">sì</text>
+
+        <rect class="bx" x="10" y="160" width="220" height="48" rx="8"/>
+        <text x="24" y="180" class="b">Manuale del test AMOS</text>
+        <text x="24" y="198" class="s">libro di un editore</text>
+        <line class="ln dash" x1="230" y1="184" x2="558" y2="184" marker-end="url(#ar)"/>
+        <text x="394" y="176" text-anchor="middle" class="s">solo con licenza dell'editore</text>
+
+        <rect class="bx-p" x="10" y="230" width="220" height="48" rx="8"/>
+        <text x="24" y="250" class="b">Domande e punteggi del test</text>
+        <text x="24" y="268" class="s">materiale riservato</text>
+        <line class="ln-p" x1="230" y1="254" x2="360" y2="254"/>
+        <line class="ln-p" x1="362" y1="244" x2="382" y2="264"/>
+        <line class="ln-p" x1="382" y1="244" x2="362" y2="264"/>
+        <text x="394" y="258" class="s">mai</text>
+
+        <rect class="bx-m" x="560" y="20" width="150" height="190" rx="10"/>
+        <text x="635" y="104" text-anchor="middle" class="b">Archivio</text>
+        <text x="635" y="122" text-anchor="middle" class="b">del metodo</text>
+        <text x="635" y="146" text-anchor="middle" class="s">ogni brano sa</text>
+        <text x="635" y="161" text-anchor="middle" class="s">da che fonte viene</text>
+      </svg>
+    </div>
+    <figcaption>Quattro tipi di fonte, quattro risposte diverse. La strada più semplice per i contenuti del test è la seconda: schede scritte da zero dallo psicologo con parole sue.</figcaption>
+  </figure>
+  <div class="rules">
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Comprare il libro non basta</h3>
+      <p>Avere una copia non dà il diritto di copiarla in un archivio digitale e di farla citare a migliaia di studenti. Le eccezioni per l'analisi automatica dei testi non coprono con sicurezza un archivio che restituisce brani agli utenti.</p>
+    </article>
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Le idee sono libere, le parole no</h3>
+      <p>Il diritto d'autore protegge il testo, non i concetti. Una scheda scritta da zero dallo psicologo si può usare; pagine copiate o parafrasate da vicino no.</p>
+    </article>
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Il test non entra mai nell'AI</h3>
+      <p>Domande, chiavi di correzione e tabelle dei punteggi sono protette, e se circolassero il test perderebbe valore. L'AI non somministra e non corregge il test.</p>
+    </article>
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Citare, non riprodurre</h3>
+      <p>Anche con una licenza, l'assistente riporta brevi passaggi e rimanda alla fonte (titolo, capitolo). Non restituisce pagine intere.</p>
+    </article>
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Un registro delle fonti</h3>
+      <p>Per ogni documento: chi ha i diritti, quale licenza, cosa permette, quando scade. Se una licenza scade o viene revocata, i brani di quella fonte si ritirano dall'archivio.</p>
+    </article>
+    <article class="rule" style="border-left-color:var(--metodo)">
+      <h3>Addestrare è un permesso a parte</h3>
+      <p>Usare un testo per il RAG e usarlo per addestrare un modello sono due usi diversi. La licenza deve dire esplicitamente se l'addestramento è permesso, anche per i materiali di Learnis.</p>
+    </article>
+  </div>
+  <p class="read note">Anche questa parte va confermata con un legale, insieme al contratto con Learnis che chiarisce chi garantisce i diritti sui materiali forniti.</p>
+</section>
+
+<!-- 9. ERRORI -->
+<section id="errori">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 9</span>
     <h2>Cosa può andare storto</h2>
     <p>La regola da ricordare: <strong>quando il RAG sbaglia, di solito è colpa del recupero</strong>, non dell'LLM. Per questo ogni risposta registra quali brani ha usato.</p>
   </div>
@@ -693,12 +833,12 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
   </div>
 </section>
 
-<!-- 9. VERIFICA -->
+<!-- 10. VERIFICA -->
 <section id="verifica">
   <div class="read" style="display:grid;gap:12px">
-    <span class="eyebrow">Parte 9</span>
+    <span class="eyebrow">Parte 10</span>
     <h2>Verifica di aver capito</h2>
-    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 10 aperte</span></p>
+    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 12 aperte</span></p>
   </div>
   <div class="quiz read" id="quiz">
     <details><summary>Che differenza c'è tra RAG e fine-tuning?</summary><p>Il RAG è l'esame a libro aperto: a ogni domanda il sistema consulta il materiale. Il fine-tuning è studiare a memoria, cioè riaddestrare il modello. Il RAG è più facile da aggiornare e da controllare.</p></details>
@@ -707,9 +847,10 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     <details><summary>Perché serve anche la ricerca per parole esatte?</summary><p>Per i nomi propri del metodo (fasi, tecniche, sigle), che la ricerca per significato può confondere.</p></details>
     <details><summary>Cosa fa il reranker?</summary><p>Rilegge i circa 30 candidati trovati dalle due ricerche e tiene i 5-8 più utili da passare all'LLM.</p></details>
     <details><summary>Perché nei vettori non mettiamo i dati degli studenti?</summary><p>Perché dai vettori si può ricostruire il testo: sarebbero comunque dati personali, ma in un posto più difficile da proteggere.</p></details>
-    <details><summary>Perché basta un database normale invece di uno specializzato?</summary><p>Perché il numero di vettori dipende dal materiale del metodo, che è poco, e non dal numero di studenti. Un solo sistema è più facile da proteggere e da cui cancellare.</p></details>
     <details><summary>Uno studente di 13 anni vuole usare il tutor: cosa serve?</summary><p>Il consenso del genitore, registrato con data, scopo e modo in cui è stato verificato.</p></details>
-    <details><summary>Cosa chiede l'AI Act a un sistema come questo?</summary><p>Registri delle attività, supervisione umana, qualità e tracciabilità dei dati. Ed è vietato riconoscere le emozioni degli studenti.</p></details>
+    <details><summary>Perché Preparatore AI è progettato per il rischio limitato?</summary><p>Perché l'AI non profila: il profilo lo costruisce e lo approva lo psicologo, e l'AI lo riceve solo come contesto. Inoltre non dà voti, non seleziona e non decide percorsi. Va confermato per iscritto con un legale.</p></details>
+    <details><summary>Cosa chiede l'AI Act in questo caso?</summary><p>Trasparenza: un avviso chiaro che lo studente sta parlando con un'AI. Resta vietato riconoscere le emozioni degli studenti. Il GDPR invece continua a chiedere la massima protezione per i dati psicometrici.</p></details>
+    <details><summary>Possiamo caricare nell'archivio il manuale del test AMOS?</summary><p>Solo con una licenza dell'editore. In alternativa si usano schede scritte da zero dallo psicologo. Domande e punteggi del test non entrano mai.</p></details>
     <details><summary>Se l'AI risponde male, cosa controlli per primo?</summary><p>Quali brani ha recuperato: nella maggior parte dei casi l'errore nasce nella ricerca, non nella scrittura della risposta.</p></details>
   </div>
 </section>
@@ -740,13 +881,18 @@ svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; f
     ["privacy", "Dato personale", "Qualsiasi informazione riferibile a una persona, anche indirettamente.", "Non solo il nome: anche «lo studente di Milano nato a marzo 2010 con ansia da verifica»."],
     ["privacy", "Categorie particolari", "Dati con protezione rafforzata, per esempio quelli sulla salute, anche mentale.", "La cartella clinica."],
     ["privacy", "Pseudonimizzazione", "Sostituire nome e cognome con un codice e tenere separata la rubrica che li collega.", "Il compito consegnato con il numero di matricola."],
-    ["privacy", "Profilazione", "Valutare in modo automatico aspetti di una persona, come carattere o rendimento.", "Il profilo cognitivo costruito dai test."],
+    ["privacy", "Profilazione", "Valutare in modo automatico aspetti di una persona, come carattere o rendimento. Qui la fa lo psicologo, non l'AI.", "Il profilo cognitivo costruito dai test."],
+    ["privacy", "Scheda dello psicologo", "Descrizione del profilo scritta e approvata da uno psicologo, passata all'AI come contesto con un codice al posto del nome.", "Le indicazioni che il medico lascia all'infermiere."],
     ["privacy", "Consenso", "Il permesso esplicito della persona, o del genitore, per uno scopo preciso.", "Una firma per ogni scopo, non una per tutto."],
     ["privacy", "Titolare e responsabile", "Il titolare decide perché e come si usano i dati (Learnis). Il responsabile li tratta per suo conto (il fornitore).", "Il committente e l'impresa che esegue i lavori."],
     ["privacy", "DPO", "La persona che vigila sulla privacy in azienda.", "Il garante interno."],
     ["privacy", "DPIA", "La valutazione d'impatto: analizza i rischi per le persone prima di partire.", "Il piano di sicurezza di un cantiere."],
     ["privacy", "AI Act", "Il regolamento europeo sull'intelligenza artificiale, che classifica i sistemi per livello di rischio.", "Farmaci da banco e farmaci con ricetta."],
-    ["privacy", "Alto rischio", "Categoria dell'AI Act con obblighi in più: registri, supervisione umana, qualità dei dati.", "Il farmaco con ricetta."],
+    ["privacy", "Alto rischio", "Categoria dell'AI Act con molti obblighi. Ci finirebbe un'AI che profila, dà voti o decide percorsi.", "Il farmaco con ricetta."],
+    ["privacy", "Rischio limitato", "Categoria dell'AI Act con il solo obbligo di trasparenza. È la posizione di progetto di Preparatore AI.", "Il farmaco da banco, con il foglietto illustrativo."],
+    ["privacy", "Trasparenza", "Obbligo di dire chiaramente all'utente che sta parlando con un'AI.", "Il cartello «stai parlando con un assistente automatico»."],
+    ["privacy", "Diritto d'autore", "Protegge il testo di un'opera, non le idee che contiene.", "Puoi spiegare una ricetta, non fotocopiare il ricettario."],
+    ["privacy", "Licenza", "Il permesso del titolare dei diritti per un uso preciso: archivio, citazione, addestramento.", "Il contratto d'affitto: dice cosa puoi fare e per quanto."],
     ["privacy", "Diritto alla cancellazione", "Chiunque può chiedere che i propri dati siano cancellati, davvero e ovunque.", "Togliere un nome da tutti gli archivi, copie comprese."],
     ["privacy", "Accesso per riga", "Il database stesso fa vedere a ogni tutor solo i propri studenti. In gergo: Row-Level Security.", "Ogni tutor ha la chiave solo dei suoi armadietti."],
     ["privacy", "Dati in UE", "Server, copie di backup e modelli fisicamente in Europa.", "I documenti non lasciano mai il Paese."]

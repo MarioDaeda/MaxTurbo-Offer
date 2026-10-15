@@ -1,0 +1,793 @@
+<title>Preparatore AI a colpo d'occhio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: colonna di lettura stretta, figure più larghe; ogni colore codifica una "zona" (metodo, persona, AI, identità) */
+:root {
+  --bg: #F4F6F8; --surface: #FFFFFF; --fg: #17202B; --muted: #5B6676; --line: #D3D9E1;
+  --metodo: #0D7A72; --metodo-soft: #DCEFEC;
+  --persona: #B2325D; --persona-soft: #F7E0E8;
+  --ai: #A86200; --ai-soft: #FAEACD;
+  --ident: #5A4AA6; --ident-soft: #E6E2F6;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F141B; --surface: #161D27; --fg: #E5E9EF; --muted: #9AA5B5; --line: #2C3644;
+  --metodo: #4FC4B8; --metodo-soft: #12302E;
+  --persona: #F27CA2; --persona-soft: #3A1A27;
+  --ai: #F1B456; --ai-soft: #382A12;
+  --ident: #AB9DF2; --ident-soft: #262047;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0F141B; --surface: #161D27; --fg: #E5E9EF; --muted: #9AA5B5; --line: #2C3644;
+  --metodo: #4FC4B8; --metodo-soft: #12302E;
+  --persona: #F27CA2; --persona-soft: #3A1A27;
+  --ai: #F1B456; --ai-soft: #382A12;
+  --ident: #AB9DF2; --ident-soft: #262047;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg); color: var(--fg);
+  font: 16px/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 80px;
+}
+main { max-width: 960px; margin: 0 auto; display: grid; gap: 64px; }
+.read { max-width: 680px; }
+section { display: grid; gap: 20px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 700; }
+h3 { font-size: 1.12rem; font-weight: 700; }
+p { margin: 0; }
+.lead { font-size: 1.12rem; color: var(--muted); }
+.eyebrow { font: 500 0.74rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--metodo); }
+.note { font-size: 0.9rem; color: var(--muted); border-left: 3px solid var(--line); padding-left: 12px; }
+strong { font-weight: 600; }
+
+/* indice */
+.toc { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.toc a { display: inline-block; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg); text-decoration: none; font-size: 0.88rem; background: var(--surface); }
+.toc a:hover, .toc a:focus-visible { border-color: var(--metodo); color: var(--metodo); outline: none; }
+
+/* problemi */
+.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.prob { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.prob h3 { font-size: 1.02rem; }
+.prob p { font-size: 0.94rem; color: var(--muted); }
+.solve { font: 500 0.76rem/1.3 var(--mono); color: var(--metodo); }
+.prob.p-persona .solve { color: var(--persona); }
+
+/* figure */
+figure { margin: 0; display: grid; gap: 10px; }
+.fig { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; }
+.fig svg { display: block; width: 100%; min-width: 600px; height: auto; color: var(--fg); }
+figcaption { font-size: 0.9rem; color: var(--muted); max-width: 680px; }
+svg text { font-family: var(--body); font-size: 13px; fill: currentColor; }
+svg .s { font-size: 11.5px; fill: var(--muted); }
+svg .b { font-weight: 600; }
+svg .mono { font-family: var(--mono); font-size: 11px; }
+svg .lane { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; fill: var(--muted); }
+.bx { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.bx-m { fill: var(--metodo-soft); stroke: var(--metodo); stroke-width: 1.5; }
+.bx-p { fill: var(--persona-soft); stroke: var(--persona); stroke-width: 1.5; }
+.bx-a { fill: var(--ai-soft); stroke: var(--ai); stroke-width: 1.5; }
+.bx-i { fill: var(--ident-soft); stroke: var(--ident); stroke-width: 1.5; }
+.lane-bg { fill: var(--bg); stroke: var(--line); stroke-dasharray: 4 4; }
+.ln { stroke: currentColor; stroke-width: 1.5; fill: none; }
+.ln-p { stroke: var(--persona); stroke-width: 1.5; fill: none; }
+.ln-m { stroke: var(--metodo); stroke-width: 1.5; fill: none; }
+.dash { stroke-dasharray: 5 4; }
+.dot { fill: var(--muted); }
+.dot-q { fill: var(--ai); }
+.ring { fill: none; stroke: var(--ai); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.c-m { fill: var(--metodo); } .c-p { fill: var(--persona); } .c-a { fill: var(--ai); } .c-i { fill: var(--ident); }
+.mk { fill: currentColor; } .mk-p { fill: var(--persona); } .mk-m { fill: var(--metodo); }
+.grid-ln { stroke: var(--line); stroke-width: 1; }
+
+/* parole */
+.filter { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.filter input { font: inherit; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg); min-width: 0; flex: 1 1 220px; max-width: 360px; }
+.filter input:focus-visible { outline: 2px solid var(--metodo); outline-offset: 1px; }
+.chip-btn { font: 500 0.8rem var(--mono); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.chip-btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip-btn:focus-visible { outline: 2px solid var(--metodo); outline-offset: 2px; }
+.terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.term { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; border-top: 3px solid var(--metodo); }
+.term[data-g="privacy"] { border-top-color: var(--persona); }
+.term dt { font-family: var(--display); font-weight: 700; font-size: 1.02rem; }
+.term dd { margin: 0; font-size: 0.92rem; }
+.term .img { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+.empty { color: var(--muted); font-size: 0.92rem; }
+
+/* scelte */
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.choice { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.choice.key { border: 2px solid var(--metodo); }
+.choice p { font-size: 0.94rem; }
+.tag { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--metodo); }
+
+/* rischi */
+.risks { display: grid; gap: 10px; }
+.risk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 0.93rem; }
+.risk.head { background: transparent; border: none; padding-block: 0; font: 500 0.74rem var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.risk .sym { font-weight: 600; }
+@media (max-width: 640px) {
+  .risk { grid-template-columns: 1fr; gap: 4px; }
+  .risk.head { display: none; }
+  .risk .cause::before { content: "Perché: "; color: var(--muted); }
+  .risk .fix::before { content: "Rimedio: "; color: var(--muted); }
+}
+
+/* regole */
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.rule { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--persona); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.rule p { font-size: 0.94rem; }
+
+/* verifica */
+.quiz { display: grid; gap: 10px; }
+.quiz details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
+.quiz summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 12px; align-items: baseline; }
+.quiz summary::-webkit-details-marker { display: none; }
+.quiz summary::before { content: "+"; font-family: var(--mono); color: var(--metodo); width: 1ch; flex: none; }
+.quiz details[open] summary::before { content: "−"; }
+.quiz summary:focus-visible { outline: 2px solid var(--metodo); outline-offset: 4px; border-radius: 4px; }
+.quiz details p { margin-top: 10px; padding-left: calc(1ch + 12px); color: var(--muted); }
+.progress { font: 500 0.82rem var(--mono); color: var(--muted); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.85rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1.5px solid; }
+.sw-m { background: var(--metodo-soft); border-color: var(--metodo); }
+.sw-p { background: var(--persona-soft); border-color: var(--persona); }
+.sw-a { background: var(--ai-soft); border-color: var(--ai); }
+.sw-i { background: var(--ident-soft); border-color: var(--ident); }
+
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk" d="M0 0 L10 5 L0 10 z"/></marker>
+    <marker id="ar-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+    <marker id="ar-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-m" d="M0 0 L10 5 L0 10 z"/></marker>
+  </defs>
+</svg>
+
+<main>
+
+<header class="read" style="display:grid;gap:16px">
+  <span class="eyebrow">Guida di studio · Preparatore AI</span>
+  <h1>Preparatore AI a colpo d'occhio</h1>
+  <p class="lead">Come un tutor AI trova le risposte nel metodo ALCUORE e come si proteggono i dati degli studenti. Niente codice: concetti, immagini e le parole da saper usare.</p>
+  <div class="legend" aria-label="Legenda dei colori">
+    <span><i class="sw sw-m"></i>Materiale del metodo</span>
+    <span><i class="sw sw-p"></i>Dati personali degli studenti</span>
+    <span><i class="sw sw-a"></i>Intelligenza artificiale</span>
+    <span><i class="sw sw-i"></i>Identità (nomi, contatti)</span>
+  </div>
+  <ul class="toc" aria-label="Indice">
+    <li><a href="#problemi">I problemi</a></li>
+    <li><a href="#parole">Le parole</a></li>
+    <li><a href="#rag">RAG</a></li>
+    <li><a href="#significato">Cercare per significato</a></li>
+    <li><a href="#percorso">Il percorso completo</a></li>
+    <li><a href="#scelte">Le scelte di fondo</a></li>
+    <li><a href="#privacy">Privacy e regole</a></li>
+    <li><a href="#errori">Cosa va storto</a></li>
+    <li><a href="#verifica">Verifica</a></li>
+  </ul>
+</header>
+
+<!-- 1. PROBLEMI -->
+<section id="problemi">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 1</span>
+    <h2>Cinque problemi da risolvere</h2>
+    <p>Tutto quello che segue esiste per rispondere a questi cinque problemi. Sotto ogni problema c'è il nome della soluzione, che ritroverai più avanti.</p>
+  </div>
+  <div class="problems">
+    <article class="prob">
+      <h3>L'AI non conosce il metodo</h3>
+      <p>Un LLM sa tante cose in generale, ma non le fasi e le tecniche ALCUORE. Se non gli dai il materiale, risponde in modo generico o inventa.</p>
+      <span class="solve">→ RAG: dargli il materiale giusto a ogni domanda</span>
+    </article>
+    <article class="prob">
+      <h3>Trovare il brano giusto</h3>
+      <p>Lo studente scrive «mi distraggo sempre», il manuale dice «gestione dell'attenzione». Cercare le parole uguali non basta.</p>
+      <span class="solve">→ Embedding e ricerca per significato</span>
+    </article>
+    <article class="prob p-persona">
+      <h3>Personalizzare senza esporre</h3>
+      <p>Il tutor deve sapere fase e profilo dello studente, ma i risultati dei test sono dati delicati.</p>
+      <span class="solve">→ Etichette di profilo e tre zone separate</span>
+    </article>
+    <article class="prob p-persona">
+      <h3>Minorenni e dati psicologici</h3>
+      <p>Utenti dai 14 anni e test che possono rivelare aspetti della salute: GDPR e AI Act chiedono la massima attenzione.</p>
+      <span class="solve">→ Consensi, accessi limitati, cancellazione reale</span>
+    </article>
+    <article class="prob">
+      <h3>Sapere se risponde bene</h3>
+      <p>Un'AI può sbagliare con grande sicurezza. Bisogna misurarla e lasciare l'ultima parola al tutor.</p>
+      <span class="solve">→ Valutazione e supervisione del tutor</span>
+    </article>
+  </div>
+</section>
+
+<!-- 2. PAROLE -->
+<section id="parole">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 2</span>
+    <h2>Le parole fondamentali</h2>
+    <p>Ogni parola ha una definizione e un'immagine per ricordarla. Usa il filtro per ripassare.</p>
+  </div>
+  <div class="filter">
+    <label for="q" class="note" style="border:none;padding:0">Cerca</label>
+    <input id="q" type="search" placeholder="es. embedding, consenso…" autocomplete="off">
+    <button class="chip-btn" type="button" data-f="all" aria-pressed="true">Tutte</button>
+    <button class="chip-btn" type="button" data-f="ai" aria-pressed="false">AI e ricerca</button>
+    <button class="chip-btn" type="button" data-f="privacy" aria-pressed="false">Privacy e regole</button>
+  </div>
+  <dl class="terms" id="terms"></dl>
+  <p class="empty" id="empty" hidden>Nessuna parola corrisponde alla ricerca.</p>
+</section>
+
+<!-- 3. RAG -->
+<section id="rag">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 3</span>
+    <h2>RAG: l'esame a libro aperto</h2>
+    <p>Senza RAG l'LLM risponde a memoria. Con il RAG, prima di rispondere, il sistema cerca nel materiale del metodo i brani pertinenti e li mette davanti all'LLM, che risponde basandosi su quelli e li cita.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 310" role="img" aria-label="Confronto: senza RAG l'LLM risponde a memoria; con RAG una ricerca preleva brani dal materiale ALCUORE e l'LLM risponde citandoli.">
+        <text x="20" y="28" class="lane">SENZA RAG</text>
+        <rect class="bx" x="20" y="45" width="130" height="44" rx="8"/>
+        <text x="85" y="72" text-anchor="middle">Domanda</text>
+        <line class="ln" x1="150" y1="67" x2="258" y2="67" marker-end="url(#ar)"/>
+        <rect class="bx-a" x="260" y="45" width="130" height="44" rx="8"/>
+        <text x="325" y="72" text-anchor="middle" class="b">LLM</text>
+        <line class="ln" x1="390" y1="67" x2="498" y2="67" marker-end="url(#ar)"/>
+        <text x="444" y="59" text-anchor="middle" class="s">a memoria</text>
+        <rect class="bx-p" x="500" y="45" width="200" height="44" rx="8"/>
+        <text x="600" y="72" text-anchor="middle">Generica o inventata</text>
+
+        <line class="grid-ln" x1="20" y1="120" x2="700" y2="120"/>
+
+        <text x="20" y="148" class="lane">CON RAG</text>
+        <rect class="bx" x="20" y="165" width="130" height="44" rx="8"/>
+        <text x="85" y="192" text-anchor="middle">Domanda</text>
+        <line class="ln" x1="150" y1="187" x2="198" y2="187" marker-end="url(#ar)"/>
+        <rect class="bx" x="200" y="165" width="130" height="44" rx="8"/>
+        <text x="265" y="192" text-anchor="middle" class="b">Ricerca</text>
+        <line class="ln" x1="330" y1="187" x2="388" y2="187" marker-end="url(#ar)"/>
+        <text x="359" y="179" text-anchor="middle" class="s">+ brani</text>
+        <rect class="bx-a" x="390" y="165" width="130" height="44" rx="8"/>
+        <text x="455" y="192" text-anchor="middle" class="b">LLM</text>
+        <line class="ln" x1="520" y1="187" x2="568" y2="187" marker-end="url(#ar)"/>
+        <rect class="bx-m" x="570" y="165" width="130" height="44" rx="8"/>
+        <text x="635" y="192" text-anchor="middle">Risposta + fonti</text>
+
+        <line class="ln-m" x1="265" y1="211" x2="265" y2="248" marker-start="url(#ar-m)" marker-end="url(#ar-m)"/>
+        <text x="276" y="234" class="s">cerca e preleva 5-8 brani</text>
+        <rect class="bx-m" x="170" y="250" width="190" height="44" rx="8"/>
+        <text x="265" y="277" text-anchor="middle">Materiale ALCUORE</text>
+      </svg>
+    </div>
+    <figcaption>L'unica differenza è il passaggio dalla biblioteca del metodo. Se il manuale cambia, si aggiorna il materiale e il giorno dopo l'AI usa la versione nuova, senza riaddestrare nulla.</figcaption>
+  </figure>
+  <div class="read note">L'alternativa si chiama <strong>fine-tuning</strong>: riaddestrare il modello sui propri testi, come far studiare a memoria. Costa di più, è difficile da correggere e, se fatto sulle conversazioni degli studenti, pone problemi di privacy. Per questo il progetto parte dal RAG.</div>
+</section>
+
+<!-- 4. SIGNIFICATO -->
+<section id="significato">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 4</span>
+    <h2>Cercare per significato</h2>
+    <p>Un <strong>embedding</strong> trasforma un testo in una lista di numeri: la sua posizione su una mappa del significato. Testi che parlano della stessa cosa finiscono vicini anche se usano parole diverse. Cercare significa prendere la posizione della domanda e guardare cosa c'è intorno.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 350" role="img" aria-label="Mappa del significato: tre gruppi di frasi (attenzione, mappe, ansia). La domanda 'mi distraggo sempre' cade vicino alle frasi sull'attenzione, che sono quelle recuperate.">
+        <rect x="10" y="10" width="700" height="330" rx="10" fill="none" class="grid-ln"/>
+        <circle class="ring" cx="160" cy="145" r="95"/>
+        <text x="160" y="42" text-anchor="middle" class="s">i più vicini: vengono recuperati</text>
+
+        <circle class="dot" cx="90" cy="90" r="5"/>
+        <text x="100" y="94">Gestire l'attenzione</text>
+        <circle class="dot" cx="120" cy="200" r="5"/>
+        <text x="130" y="204">Distrazioni dal telefono</text>
+        <circle class="dot-q" cx="200" cy="145" r="7"/>
+        <text x="212" y="149" class="b">«mi distraggo sempre»</text>
+        <text x="212" y="165" class="s">la domanda</text>
+
+        <circle class="dot" cx="470" cy="70" r="5"/>
+        <text x="480" y="74">Mappa concettuale</text>
+        <circle class="dot" cx="520" cy="115" r="5"/>
+        <text x="530" y="119">Schemi visivi</text>
+        <circle class="dot" cx="455" cy="160" r="5"/>
+        <text x="465" y="164">Riassumere un capitolo</text>
+
+        <circle class="dot" cx="300" cy="280" r="5"/>
+        <text x="310" y="284">Ansia prima della verifica</text>
+        <circle class="dot" cx="380" cy="318" r="5"/>
+        <text x="390" y="322">Respirare prima dell'esame</text>
+      </svg>
+    </div>
+    <figcaption>In realtà la mappa non ha 2 dimensioni ma centinaia, e le singole direzioni non hanno un significato leggibile: contano solo le distanze. L'idea però è questa: «coordinate GPS del significato».</figcaption>
+  </figure>
+
+  <div class="read" style="display:grid;gap:12px">
+    <h3>Prima di cercare: tagliare il materiale in brani</h3>
+    <p>Il manuale si divide in <strong>chunk</strong>, brani di circa mezza pagina, seguendo i titoli: fase → tecnica → esercizio. Ogni brano porta con sé delle etichette (la fase, il tipo di contenuto, il profilo a cui è adatto), così si può filtrare con certezza invece di sperare che l'AI "capisca" la fase.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 230" role="img" aria-label="Il manuale, organizzato per fase, tecnica ed esercizio, viene tagliato seguendo i titoli in brani etichettati con fase, tecnica e profilo.">
+        <rect class="bx" x="10" y="15" width="290" height="195" rx="8"/>
+        <text x="30" y="44" class="b">Manuale ALCUORE</text>
+        <text x="50" y="79">Fase 3</text>
+        <text x="70" y="114">Tecnica: mappe concettuali</text>
+        <text x="90" y="149">Esercizio 1</text>
+        <text x="90" y="184">Esercizio 2</text>
+
+        <line class="ln" x1="290" y1="110" x2="398" y2="46" marker-end="url(#ar)"/>
+        <line class="ln" x1="200" y1="145" x2="398" y2="111" marker-end="url(#ar)"/>
+        <line class="ln" x1="200" y1="180" x2="398" y2="176" marker-end="url(#ar)"/>
+
+        <rect class="bx-m" x="400" y="20" width="310" height="52" rx="8"/>
+        <text x="414" y="41" class="mono">Fase 3 › Mappe › Teoria</text>
+        <text x="414" y="61" class="s">etichette: fase 3 · teoria · profilo visivo</text>
+        <rect class="bx-m" x="400" y="85" width="310" height="52" rx="8"/>
+        <text x="414" y="106" class="mono">Fase 3 › Mappe › Esercizio 1</text>
+        <text x="414" y="126" class="s">etichette: fase 3 · esercizio</text>
+        <rect class="bx-m" x="400" y="150" width="310" height="52" rx="8"/>
+        <text x="414" y="171" class="mono">Fase 3 › Mappe › Esercizio 2</text>
+        <text x="414" y="191" class="s">etichette: fase 3 · esercizio · profilo visivo</text>
+      </svg>
+    </div>
+    <figcaption>Si recupera il brano piccolo, che è preciso; se serve, all'AI si passa anche la sezione intera da cui viene. La fase è un'etichetta, non qualcosa che l'AI deve indovinare.</figcaption>
+  </figure>
+
+  <div class="read" style="display:grid;gap:12px">
+    <h3>Due ricerche insieme, poi una selezione</h3>
+    <p>La ricerca per significato trova i sinonimi ma può confondere i nomi propri del metodo. La ricerca per parole esatte fa il contrario. Si usano entrambe (<strong>ricerca ibrida</strong>), si uniscono le classifiche e un <strong>reranker</strong> rilegge i candidati per tenere i migliori.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 260" role="img" aria-label="La domanda va a due ricerche parallele, per significato e per parole esatte; le classifiche si fondono e il reranker riduce 30 candidati ai 5-8 migliori.">
+        <rect class="bx" x="10" y="105" width="120" height="50" rx="8"/>
+        <text x="70" y="135" text-anchor="middle">Domanda</text>
+
+        <line class="ln" x1="130" y1="122" x2="188" y2="70" marker-end="url(#ar)"/>
+        <line class="ln" x1="130" y1="140" x2="188" y2="192" marker-end="url(#ar)"/>
+
+        <rect class="bx-m" x="190" y="40" width="180" height="56" rx="8"/>
+        <text x="280" y="63" text-anchor="middle" class="b">Per significato</text>
+        <text x="280" y="82" text-anchor="middle" class="s">trova i sinonimi</text>
+        <rect class="bx-m" x="190" y="165" width="180" height="56" rx="8"/>
+        <text x="280" y="188" text-anchor="middle" class="b">Per parole esatte</text>
+        <text x="280" y="207" text-anchor="middle" class="s">trova i nomi del metodo</text>
+
+        <line class="ln" x1="370" y1="70" x2="408" y2="118" marker-end="url(#ar)"/>
+        <line class="ln" x1="370" y1="192" x2="408" y2="143" marker-end="url(#ar)"/>
+
+        <rect class="bx" x="410" y="105" width="110" height="50" rx="8"/>
+        <text x="465" y="135" text-anchor="middle" class="b">Fusione</text>
+
+        <line class="ln" x1="520" y1="130" x2="558" y2="130" marker-end="url(#ar)"/>
+        <text x="539" y="122" text-anchor="middle" class="s">30</text>
+
+        <rect class="bx-a" x="560" y="100" width="150" height="60" rx="8"/>
+        <text x="635" y="125" text-anchor="middle" class="b">Reranker</text>
+        <text x="635" y="144" text-anchor="middle" class="s">tiene i 5-8 migliori</text>
+      </svg>
+    </div>
+    <figcaption>La fusione guarda solo le posizioni in classifica, perché i punteggi delle due ricerche non sono confrontabili. Il reranker è come un secondo lettore che sceglie le schede davvero utili.</figcaption>
+  </figure>
+</section>
+
+<!-- 5. PERCORSO -->
+<section id="percorso">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 5</span>
+    <h2>Il percorso completo</h2>
+    <p>Il sistema ha due momenti. La <strong>preparazione</strong> si fa una volta, e si ripete solo quando cambia il materiale. La <strong>risposta</strong> avviene a ogni messaggio dello studente.</p>
+  </div>
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 365" role="img" aria-label="Preparazione: materiali, brani, embedding, archivio del metodo. Risposta: controllo consensi, fase e profilo, ricerca ibrida che legge l'archivio, reranker, LLM in UE, risposta con fonti, registro, controllo del tutor.">
+        <rect class="lane-bg" x="2" y="8" width="716" height="112" rx="10"/>
+        <text x="16" y="30" class="lane">PREPARAZIONE · UNA VOLTA</text>
+        <rect class="bx-m" x="16" y="52" width="150" height="48" rx="8"/>
+        <text x="91" y="81" text-anchor="middle">Materiali ALCUORE</text>
+        <line class="ln" x1="166" y1="76" x2="196" y2="76" marker-end="url(#ar)"/>
+        <rect class="bx-m" x="198" y="52" width="150" height="48" rx="8"/>
+        <text x="273" y="81" text-anchor="middle">Brani etichettati</text>
+        <line class="ln" x1="348" y1="76" x2="378" y2="76" marker-end="url(#ar)"/>
+        <rect class="bx-m" x="380" y="52" width="150" height="48" rx="8"/>
+        <text x="455" y="81" text-anchor="middle">Embedding</text>
+        <line class="ln" x1="530" y1="76" x2="560" y2="76" marker-end="url(#ar)"/>
+        <rect class="bx-m" x="562" y="52" width="142" height="48" rx="8"/>
+        <text x="633" y="81" text-anchor="middle" class="b">Archivio metodo</text>
+
+        <rect class="lane-bg" x="2" y="140" width="716" height="218" rx="10"/>
+        <text x="16" y="162" class="lane">RISPOSTA · A OGNI MESSAGGIO</text>
+
+        <rect class="bx-p" x="16" y="182" width="150" height="48" rx="8"/>
+        <text x="91" y="203" text-anchor="middle">Consensi ok?</text>
+        <text x="91" y="220" text-anchor="middle" class="s">se no, si blocca</text>
+        <line class="ln" x1="166" y1="206" x2="196" y2="206" marker-end="url(#ar)"/>
+        <rect class="bx-p" x="198" y="182" width="150" height="48" rx="8"/>
+        <text x="273" y="203" text-anchor="middle">Fase + profilo</text>
+        <text x="273" y="220" text-anchor="middle" class="s">etichette, non punteggi</text>
+        <line class="ln" x1="348" y1="206" x2="378" y2="206" marker-end="url(#ar)"/>
+        <rect class="bx" x="380" y="182" width="150" height="48" rx="8"/>
+        <text x="455" y="211" text-anchor="middle">Ricerca ibrida</text>
+        <line class="ln" x1="530" y1="206" x2="560" y2="206" marker-end="url(#ar)"/>
+        <rect class="bx-a" x="562" y="182" width="142" height="48" rx="8"/>
+        <text x="633" y="211" text-anchor="middle">Reranker</text>
+
+        <line class="ln-m dash" x1="633" y1="100" x2="470" y2="180" marker-end="url(#ar-m)"/>
+        <text x="572" y="136" class="s" text-anchor="middle">legge i brani</text>
+
+        <line class="ln" x1="633" y1="230" x2="633" y2="278" marker-end="url(#ar)"/>
+
+        <rect class="bx-a" x="562" y="280" width="142" height="48" rx="8"/>
+        <text x="633" y="301" text-anchor="middle">LLM in Europa</text>
+        <text x="633" y="318" text-anchor="middle" class="s">risponde dai brani</text>
+        <line class="ln" x1="562" y1="304" x2="532" y2="304" marker-end="url(#ar)"/>
+        <rect class="bx-m" x="380" y="280" width="150" height="48" rx="8"/>
+        <text x="455" y="309" text-anchor="middle">Risposta con fonti</text>
+        <line class="ln" x1="380" y1="304" x2="350" y2="304" marker-end="url(#ar)"/>
+        <rect class="bx" x="198" y="280" width="150" height="48" rx="8"/>
+        <text x="273" y="301" text-anchor="middle">Registro</text>
+        <text x="273" y="318" text-anchor="middle" class="s">quali brani, quando</text>
+        <line class="ln" x1="198" y1="304" x2="168" y2="304" marker-end="url(#ar)"/>
+        <rect class="bx" x="16" y="280" width="150" height="48" rx="8"/>
+        <text x="91" y="301" text-anchor="middle" class="b">Tutor controlla</text>
+        <text x="91" y="318" text-anchor="middle" class="s">e corregge</text>
+      </svg>
+    </div>
+    <figcaption>Nella preparazione entra solo il materiale del metodo: nessun dato degli studenti. I dati personali (in rosa) servono solo al momento della risposta, e all'AI arrivano come etichette semplici, per esempio «ansia da prova», mai come punteggi grezzi dei test.</figcaption>
+  </figure>
+</section>
+
+<!-- 6. SCELTE -->
+<section id="scelte">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 6</span>
+    <h2>Le scelte di fondo</h2>
+    <p>Queste sono le decisioni su cui si regge il progetto. Per ognuna conta saper dire il perché.</p>
+  </div>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 300" role="img" aria-label="Tre zone del database: Metodo, letto dall'AI; Studio, con dati pseudonimizzati visibili solo allo studente attivo e ai suoi tutor; Identità, accessibile solo all'amministrazione. Studio e Identità sono collegati solo da un codice.">
+        <rect class="bx-a" x="120" y="29" width="110" height="32" rx="16"/>
+        <text x="175" y="50" text-anchor="middle" class="b">AI</text>
+        <rect class="bx" x="315" y="29" width="110" height="32" rx="16"/>
+        <text x="370" y="50" text-anchor="middle" class="b">Tutor</text>
+        <rect class="bx" x="545" y="29" width="120" height="32" rx="16"/>
+        <text x="605" y="50" text-anchor="middle" class="b">Segreteria</text>
+
+        <line class="ln" x1="160" y1="61" x2="120" y2="108" marker-end="url(#ar)"/>
+        <text x="132" y="86" text-anchor="end" class="s">legge</text>
+        <line class="ln" x1="195" y1="61" x2="315" y2="108" marker-end="url(#ar)"/>
+        <text x="262" y="80" class="s">solo lo studente attivo</text>
+        <line class="ln" x1="375" y1="61" x2="385" y2="108" marker-end="url(#ar)"/>
+        <text x="390" y="90" class="s">solo i suoi studenti</text>
+        <line class="ln" x1="605" y1="61" x2="605" y2="108" marker-end="url(#ar)"/>
+        <text x="613" y="90" class="s">gestisce</text>
+
+        <rect class="bx-m" x="10" y="110" width="220" height="140" rx="10"/>
+        <text x="26" y="136" class="b">Metodo</text>
+        <text x="26" y="166">Manuali, schede, esercizi</text>
+        <text x="26" y="190">Brani + embedding</text>
+        <text x="26" y="214" class="s">nessun dato personale</text>
+
+        <rect class="bx-p" x="250" y="110" width="220" height="140" rx="10"/>
+        <text x="266" y="136" class="b">Studio</text>
+        <text x="266" y="166">Codice al posto del nome</text>
+        <text x="266" y="190">Fase, profilo, consensi</text>
+        <text x="266" y="214">Conversazioni</text>
+
+        <rect class="bx-i" x="490" y="110" width="220" height="140" rx="10"/>
+        <text x="506" y="136" class="b">Identità</text>
+        <text x="506" y="166">Nome e cognome</text>
+        <text x="506" y="190">Contatti</text>
+        <text x="506" y="214">Genitori</text>
+
+        <path class="ln dash" d="M360 250 Q 480 292 600 250"/>
+        <text x="480" y="292" text-anchor="middle" class="s">collegati solo dal codice</text>
+      </svg>
+    </div>
+    <figcaption>Tre zone con protezioni diverse. L'AI non ha nessuna strada verso nomi e contatti. Anche dentro la zona Studio il database stesso fa vedere a ogni tutor solo i propri studenti, come se ognuno avesse la chiave solo dei propri armadietti.</figcaption>
+  </figure>
+
+  <div class="choices">
+    <article class="choice key">
+      <span class="tag">La decisione più importante</span>
+      <h3>Nei vettori solo il metodo</h3>
+      <p>Gli embedding sembrano numeri anonimi, ma dai numeri si può ricostruire gran parte del testo di partenza. Un embedding di un messaggio dello studente va trattato come il messaggio stesso. Mettendo nei vettori solo il materiale del metodo, la parte tecnologicamente nuova resta fuori dalla zona delicata.</p>
+    </article>
+    <article class="choice">
+      <span class="tag">Architettura</span>
+      <h3>Un solo database</h3>
+      <p>Il numero di vettori dipende dal materiale del metodo, non da quanti studenti ci sono: è un volume piccolo. Basta un database classico (PostgreSQL) con un'estensione per i vettori. Un solo sistema da proteggere, salvare e da cui cancellare.</p>
+    </article>
+    <article class="choice">
+      <span class="tag">Approccio</span>
+      <h3>RAG prima, fine-tuning dopo</h3>
+      <p>Il RAG si aggiorna subito e mostra le fonti. Il fine-tuning si valuta più avanti, e solo con dati raccolti con un consenso apposito.</p>
+    </article>
+    <article class="choice">
+      <span class="tag">Dove gira</span>
+      <h3>Tutto in Europa</h3>
+      <p>Modelli open-weight, cioè installabili, su server in UE: sia quello che calcola gli embedding sia l'LLM che scrive. Nessun testo degli studenti esce dall'Europa.</p>
+    </article>
+    <article class="choice">
+      <span class="tag">Persone</span>
+      <h3>Il tutor resta al comando</h3>
+      <p>Il profilo derivato dai test viene verificato da un tutor, che vede le risposte e può correggerle. È un valore per Learnis ed è ciò che chiedono le norme.</p>
+    </article>
+  </div>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 120" role="img" aria-label="Un messaggio personale diventa un embedding, ma dall'embedding si può ricostruire il messaggio: per questo non è anonimo.">
+        <rect class="bx-p" x="10" y="38" width="210" height="48" rx="8"/>
+        <text x="115" y="67" text-anchor="middle">«Prendo farmaci per l'ADHD»</text>
+        <line class="ln" x1="220" y1="62" x2="268" y2="62" marker-end="url(#ar)"/>
+        <text x="244" y="54" text-anchor="middle" class="s">calcolo</text>
+        <rect class="bx" x="270" y="38" width="180" height="48" rx="8"/>
+        <text x="360" y="67" text-anchor="middle" class="mono">[0.12, −0.80, 0.33 …]</text>
+        <line class="ln-p dash" x1="450" y1="62" x2="498" y2="62" marker-end="url(#ar-p)"/>
+        <text x="474" y="54" text-anchor="middle" class="s">ricostruzione</text>
+        <rect class="bx-p" x="500" y="38" width="210" height="48" rx="8"/>
+        <text x="605" y="67" text-anchor="middle">«Prendo farmaci per l'ADHD»</text>
+      </svg>
+    </div>
+    <figcaption>Perché i vettori non sono anonimi: studi del 2023 hanno ricostruito esattamente la maggior parte di frasi brevi partendo solo dai numeri.</figcaption>
+  </figure>
+</section>
+
+<!-- 7. PRIVACY -->
+<section id="privacy">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 7</span>
+    <h2>Privacy e regole</h2>
+    <p>Non servono gli articoli a memoria. Servono quattro immagini: chi dà il consenso, dove si colloca il sistema per l'AI Act, cosa vuol dire cancellare e quali dati sono delicati.</p>
+  </div>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 150" role="img" aria-label="Linea dell'età: sotto i 14 anni serve il consenso del genitore, anche per usare l'AI; dai 14 ai 18 decide il ragazzo con un'informativa chiara; dai 18 è adulto.">
+        <rect class="bx-p" x="40" y="62" width="284" height="16" rx="3"/>
+        <rect class="bx-a" x="324" y="62" width="285" height="16" rx="3"/>
+        <rect class="bx-m" x="609" y="62" width="71" height="16" rx="3"/>
+        <text x="182" y="40" text-anchor="middle" class="b">Consenso del genitore</text>
+        <text x="182" y="55" text-anchor="middle" class="s">anche per usare l'AI</text>
+        <text x="466" y="40" text-anchor="middle" class="b">Consenso del ragazzo</text>
+        <text x="466" y="55" text-anchor="middle" class="s">con informativa chiara</text>
+        <text x="644" y="40" text-anchor="middle" class="b">Adulto</text>
+        <line class="ln" x1="324" y1="56" x2="324" y2="96"/>
+        <line class="ln" x1="609" y1="56" x2="609" y2="96"/>
+        <text x="324" y="114" text-anchor="middle" class="b">14 anni</text>
+        <text x="609" y="114" text-anchor="middle" class="b">18 anni</text>
+        <text x="40" y="114" class="s">età</text>
+        <text x="360" y="140" text-anchor="middle" class="s">Il sistema registra chi ha dato il consenso, quando, per quale scopo e su quale testo.</text>
+      </svg>
+    </div>
+    <figcaption>In Italia la soglia è 14 anni. Dal 2025 una legge italiana sull'IA usa la stessa soglia anche per l'accesso agli strumenti di intelligenza artificiale.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 210" role="img" aria-label="Piramide dei rischi dell'AI Act: in cima le pratiche vietate, come riconoscere le emozioni a scuola; sotto l'alto rischio, dove si colloca probabilmente Preparatore AI; poi rischio limitato e minimo.">
+        <rect class="bx-p" x="160" y="10" width="140" height="40" rx="6"/>
+        <text x="230" y="35" text-anchor="middle" class="b">Vietato</text>
+        <rect class="bx-a" x="110" y="58" width="240" height="40" rx="6"/>
+        <text x="230" y="83" text-anchor="middle" class="b">Alto rischio</text>
+        <rect class="bx" x="60" y="106" width="340" height="40" rx="6"/>
+        <text x="230" y="131" text-anchor="middle">Rischio limitato</text>
+        <rect class="bx" x="10" y="154" width="440" height="40" rx="6"/>
+        <text x="230" y="179" text-anchor="middle">Rischio minimo</text>
+
+        <line class="ln-p" x1="470" y1="30" x2="306" y2="30" marker-end="url(#ar-p)"/>
+        <text x="478" y="27">Riconoscere le emozioni</text>
+        <text x="478" y="42" class="s">degli studenti: già vietato</text>
+        <line class="ln" x1="470" y1="78" x2="356" y2="78" marker-end="url(#ar)"/>
+        <text x="478" y="75" class="b">Preparatore AI, probabilmente</text>
+        <text x="478" y="90" class="s">orienta lo studio e profila</text>
+      </svg>
+    </div>
+    <figcaption>Alto rischio significa tre obblighi principali: tenere registri di cosa fa il sistema, garantire la supervisione umana e curare la qualità dei dati. Le scadenze sono state rinviate (secondo le fonti più recenti a fine 2027), ma prevederli da subito costa molto meno che aggiungerli dopo.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 720 290" role="img" aria-label="Una richiesta di cancellazione deve raggiungere dati di studio, conversazioni, registri, cache e copie di backup. Dai modelli già addestrati non si può cancellare: si evita addestrandoli solo con consenso apposito.">
+        <rect class="bx-p" x="10" y="115" width="180" height="56" rx="8"/>
+        <text x="100" y="139" text-anchor="middle" class="b">Richiesta di</text>
+        <text x="100" y="157" text-anchor="middle" class="b">cancellazione</text>
+
+        <line class="ln" x1="190" y1="143" x2="318" y2="27" marker-end="url(#ar)"/>
+        <line class="ln" x1="190" y1="143" x2="318" y2="72" marker-end="url(#ar)"/>
+        <line class="ln" x1="190" y1="143" x2="318" y2="117" marker-end="url(#ar)"/>
+        <line class="ln" x1="190" y1="143" x2="318" y2="162" marker-end="url(#ar)"/>
+        <line class="ln" x1="190" y1="143" x2="318" y2="207" marker-end="url(#ar)"/>
+        <line class="ln-p dash" x1="190" y1="143" x2="318" y2="252" marker-end="url(#ar-p)"/>
+
+        <rect class="bx" x="320" y="10" width="190" height="34" rx="6"/>
+        <text x="336" y="32">Profilo e consensi</text>
+        <rect class="bx" x="320" y="55" width="190" height="34" rx="6"/>
+        <text x="336" y="77">Conversazioni</text>
+        <rect class="bx" x="320" y="100" width="190" height="34" rx="6"/>
+        <text x="336" y="122">Registri</text>
+        <rect class="bx" x="320" y="145" width="190" height="34" rx="6"/>
+        <text x="336" y="167">Cache</text>
+        <rect class="bx" x="320" y="190" width="190" height="34" rx="6"/>
+        <text x="336" y="212">Copie di backup</text>
+        <text x="524" y="212" class="s">scadono o diventano illeggibili</text>
+        <rect class="bx-p" x="320" y="235" width="190" height="34" rx="6"/>
+        <text x="336" y="257">Modelli addestrati</text>
+        <text x="524" y="252" class="s">non si può cancellare:</text>
+        <text x="524" y="267" class="s">si evita a monte, con consenso</text>
+        <text x="524" y="32" class="s">un'unica operazione</text>
+      </svg>
+    </div>
+    <figcaption>Cancellare deve significare cancellare ovunque, comprese le copie. Il database va progettato perché basti un'operazione sola. Per i modelli riaddestrati non esiste un vero «cancella», quindi le conversazioni si usano per l'addestramento solo con un consenso facoltativo, spento per default.</figcaption>
+  </figure>
+
+  <div class="rules">
+    <article class="rule">
+      <h3>Test AMOS: forse dati sensibili</h3>
+      <p>Un questionario sulle strategie di studio non è di per sé un dato sanitario. Lo diventa se fa capire qualcosa sulla salute, anche mentale. Il confine è sfumato: si progetta come se lo fosse.</p>
+    </article>
+    <article class="rule">
+      <h3>Pseudonimizzare non è anonimizzare</h3>
+      <p>Un codice al posto del nome riduce il rischio, ma il dato resta personale finché da qualche parte esiste la rubrica che collega codice e persona.</p>
+    </article>
+    <article class="rule">
+      <h3>DPIA quasi certa</h3>
+      <p>Minori, profilazione, tecnologia nuova e possibili dati delicati, tutti insieme, rendono necessaria la valutazione d'impatto. La firma il titolare (Learnis); il fornitore porta la descrizione tecnica.</p>
+    </article>
+    <article class="rule">
+      <h3>Conservare il minimo</h3>
+      <p>I registri tecnici (quali brani, quando) si tengono per mesi perché servono ai controlli. Il testo completo delle conversazioni per il debug si tiene per giorni o settimane.</p>
+    </article>
+  </div>
+  <p class="read note">Questa parte non è consulenza legale: ruoli, basi giuridiche e tempi di conservazione si decidono con il DPO di Learnis.</p>
+</section>
+
+<!-- 8. ERRORI -->
+<section id="errori">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 8</span>
+    <h2>Cosa può andare storto</h2>
+    <p>La regola da ricordare: <strong>quando il RAG sbaglia, di solito è colpa del recupero</strong>, non dell'LLM. Per questo ogni risposta registra quali brani ha usato.</p>
+  </div>
+  <div class="risks">
+    <div class="risk head"><span>Sintomo</span><span>Perché succede</span><span>Rimedio</span></div>
+    <div class="risk"><span class="sym">Risposta generica o sbagliata</span><span class="cause">Ha recuperato i brani sbagliati</span><span class="fix">Controllare il registro e testare la ricerca con domande reali</span></div>
+    <div class="risk"><span class="sym">Inventa una «fase 8»</span><span class="cause">Non si attiene alle fonti</span><span class="fix">Istruzioni rigide: «rispondi solo dai brani e citali»</span></div>
+    <div class="risk"><span class="sym">Qualità crollata dopo un aggiornamento</span><span class="cause">Sono stati mescolati due modelli di embedding: nessun errore visibile, solo risultati sbagliati</span><span class="fix">Registrare sempre quale modello ha calcolato ogni vettore</span></div>
+    <div class="risk"><span class="sym">Il brano giusto c'era ma è stato ignorato</span><span class="cause">Troppo testo: gli LLM «perdono» quello che sta in mezzo</span><span class="fix">Pochi brani ma buoni, i migliori in testa</span></div>
+    <div class="risk"><span class="sym">Qualcuno prova a ingannare l'AI</span><span class="cause">Prompt injection: istruzioni nascoste nei messaggi</span><span class="fix">Il database stesso nega i dati altrui, qualunque cosa chieda l'AI</span></div>
+  </div>
+  <div class="read" style="display:grid;gap:10px">
+    <h3>Come si misura la qualità</h3>
+    <p>I tutor scrivono un centinaio di domande realistiche, circa 14 per fase, indicando il brano giusto. Poi si controllano due cose separate:</p>
+    <p><strong>Ricerca:</strong> il brano giusto compare tra i primi 5 trovati?<br><strong>Risposta:</strong> quello che l'AI afferma è sostenuto dai brani? Si chiama <em>faithfulness</em>, fedeltà alle fonti.</p>
+    <p>Nell'uso quotidiano si aggiungono le segnalazioni dei tutor: corretto, impreciso, inventato, fuori tema.</p>
+  </div>
+</section>
+
+<!-- 9. VERIFICA -->
+<section id="verifica">
+  <div class="read" style="display:grid;gap:12px">
+    <span class="eyebrow">Parte 9</span>
+    <h2>Verifica di aver capito</h2>
+    <p>Rispondi a voce, poi apri la risposta. <span class="progress" id="prog">0 di 10 aperte</span></p>
+  </div>
+  <div class="quiz read" id="quiz">
+    <details><summary>Che differenza c'è tra RAG e fine-tuning?</summary><p>Il RAG è l'esame a libro aperto: a ogni domanda il sistema consulta il materiale. Il fine-tuning è studiare a memoria, cioè riaddestrare il modello. Il RAG è più facile da aggiornare e da controllare.</p></details>
+    <details><summary>Cos'è un embedding, in una frase?</summary><p>La posizione di un testo su una mappa del significato: testi simili stanno vicini anche se usano parole diverse.</p></details>
+    <details><summary>Perché si tagliano i materiali in brani seguendo i titoli?</summary><p>Perché così ogni brano parla di una cosa sola e porta con sé le etichette giuste (fase, tecnica, profilo), che permettono di filtrare con certezza.</p></details>
+    <details><summary>Perché serve anche la ricerca per parole esatte?</summary><p>Per i nomi propri del metodo (fasi, tecniche, sigle), che la ricerca per significato può confondere.</p></details>
+    <details><summary>Cosa fa il reranker?</summary><p>Rilegge i circa 30 candidati trovati dalle due ricerche e tiene i 5-8 più utili da passare all'LLM.</p></details>
+    <details><summary>Perché nei vettori non mettiamo i dati degli studenti?</summary><p>Perché dai vettori si può ricostruire il testo: sarebbero comunque dati personali, ma in un posto più difficile da proteggere.</p></details>
+    <details><summary>Perché basta un database normale invece di uno specializzato?</summary><p>Perché il numero di vettori dipende dal materiale del metodo, che è poco, e non dal numero di studenti. Un solo sistema è più facile da proteggere e da cui cancellare.</p></details>
+    <details><summary>Uno studente di 13 anni vuole usare il tutor: cosa serve?</summary><p>Il consenso del genitore, registrato con data, scopo e modo in cui è stato verificato.</p></details>
+    <details><summary>Cosa chiede l'AI Act a un sistema come questo?</summary><p>Registri delle attività, supervisione umana, qualità e tracciabilità dei dati. Ed è vietato riconoscere le emozioni degli studenti.</p></details>
+    <details><summary>Se l'AI risponde male, cosa controlli per primo?</summary><p>Quali brani ha recuperato: nella maggior parte dei casi l'errore nasce nella ricerca, non nella scrittura della risposta.</p></details>
+  </div>
+</section>
+
+<footer class="read note">Versione semplificata del documento tecnico «Progettare il database di Preparatore AI: vettori, RAG e GDPR». Quando ti serve un dettaglio (modelli consigliati per l'italiano, schema del database, riferimenti normativi) lo trovi lì.</footer>
+
+</main>
+
+<script>
+(function () {
+  var TERMS = [
+    ["ai", "LLM", "Il modello che scrive le risposte: ChatGPT, Claude, Llama, Mistral…", "Uno studente brillante che ha letto tutto, ma non il vostro manuale."],
+    ["ai", "Prompt", "Il testo che si dà all'LLM: istruzioni, domanda e materiale.", "La consegna di un compito."],
+    ["ai", "Allucinazione", "L'AI inventa qualcosa con tono convinto.", "Lo studente che, non sapendo, improvvisa."],
+    ["ai", "RAG", "Prima si recuperano i brani giusti dal materiale, poi l'LLM risponde basandosi su quelli e li cita.", "Un esame a libro aperto."],
+    ["ai", "Fine-tuning", "Riaddestrare il modello sui propri testi perché li impari.", "Far studiare a memoria: costa di più ed è difficile da correggere."],
+    ["ai", "Corpus", "Tutto il materiale del metodo messo a disposizione dell'AI. Si dice anche base di conoscenza.", "La biblioteca."],
+    ["ai", "Chunk", "Un brano breve, circa mezza pagina, in cui si divide il materiale.", "Le schede di un archivio."],
+    ["ai", "Embedding", "Una lista di numeri che rappresenta il significato di un testo. Testi simili hanno numeri vicini.", "Le coordinate GPS del significato."],
+    ["ai", "Ricerca semantica", "Cercare per significato confrontando gli embedding, non per parole uguali.", "Chiedere al bibliotecario «qualcosa sulla concentrazione»."],
+    ["ai", "Database vettoriale", "Un database capace di salvare embedding e trovare quelli più vicini.", "Uno schedario ordinato per argomento, non per lettera."],
+    ["ai", "Ricerca ibrida", "Ricerca per significato e per parole esatte insieme, con le classifiche unite.", "Chiedere sia al bibliotecario sia al catalogo."],
+    ["ai", "Reranker", "Un secondo modello che rilegge i candidati e tiene i migliori.", "Un secondo lettore che sceglie le 5 schede utili tra 30."],
+    ["ai", "Open-weight", "Un modello di AI che si può installare sui propri server, per esempio in Europa.", "Un software comprato, invece di un servizio altrui."],
+    ["ai", "Valutazione", "Domande con risposta nota per misurare se il sistema migliora o peggiora.", "La verifica in classe."],
+    ["ai", "Faithfulness", "Quanto di ciò che l'AI afferma è sostenuto dai brani recuperati.", "Il compito che cita solo ciò che c'è sul libro."],
+    ["privacy", "GDPR", "Il regolamento europeo sulla protezione dei dati personali.", "Il codice della strada dei dati."],
+    ["privacy", "Dato personale", "Qualsiasi informazione riferibile a una persona, anche indirettamente.", "Non solo il nome: anche «lo studente di Milano nato a marzo 2010 con ansia da verifica»."],
+    ["privacy", "Categorie particolari", "Dati con protezione rafforzata, per esempio quelli sulla salute, anche mentale.", "La cartella clinica."],
+    ["privacy", "Pseudonimizzazione", "Sostituire nome e cognome con un codice e tenere separata la rubrica che li collega.", "Il compito consegnato con il numero di matricola."],
+    ["privacy", "Profilazione", "Valutare in modo automatico aspetti di una persona, come carattere o rendimento.", "Il profilo cognitivo costruito dai test."],
+    ["privacy", "Consenso", "Il permesso esplicito della persona, o del genitore, per uno scopo preciso.", "Una firma per ogni scopo, non una per tutto."],
+    ["privacy", "Titolare e responsabile", "Il titolare decide perché e come si usano i dati (Learnis). Il responsabile li tratta per suo conto (il fornitore).", "Il committente e l'impresa che esegue i lavori."],
+    ["privacy", "DPO", "La persona che vigila sulla privacy in azienda.", "Il garante interno."],
+    ["privacy", "DPIA", "La valutazione d'impatto: analizza i rischi per le persone prima di partire.", "Il piano di sicurezza di un cantiere."],
+    ["privacy", "AI Act", "Il regolamento europeo sull'intelligenza artificiale, che classifica i sistemi per livello di rischio.", "Farmaci da banco e farmaci con ricetta."],
+    ["privacy", "Alto rischio", "Categoria dell'AI Act con obblighi in più: registri, supervisione umana, qualità dei dati.", "Il farmaco con ricetta."],
+    ["privacy", "Diritto alla cancellazione", "Chiunque può chiedere che i propri dati siano cancellati, davvero e ovunque.", "Togliere un nome da tutti gli archivi, copie comprese."],
+    ["privacy", "Accesso per riga", "Il database stesso fa vedere a ogni tutor solo i propri studenti. In gergo: Row-Level Security.", "Ogni tutor ha la chiave solo dei suoi armadietti."],
+    ["privacy", "Dati in UE", "Server, copie di backup e modelli fisicamente in Europa.", "I documenti non lasciano mai il Paese."]
+  ];
+  var list = document.getElementById("terms");
+  var empty = document.getElementById("empty");
+  var input = document.getElementById("q");
+  var btns = document.querySelectorAll(".chip-btn");
+  var group = "all";
+  list.innerHTML = TERMS.map(function (t) {
+    return '<div class="term" data-g="' + t[0] + '"><dt>' + t[1] + '</dt><dd>' + t[2] + '</dd><dd class="img">' + t[3] + '</dd></div>';
+  }).join("");
+  var cards = list.children;
+  function apply() {
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      var ok = (group === "all" || c.dataset.g === group) && (!q || c.textContent.toLowerCase().indexOf(q) !== -1);
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    empty.hidden = shown > 0;
+  }
+  input.addEventListener("input", apply);
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      group = b.dataset.f;
+      btns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      apply();
+    });
+  });
+
+  var quiz = document.querySelectorAll("#quiz details");
+  var prog = document.getElementById("prog");
+  var seen = new Set();
+  quiz.forEach(function (d, i) {
+    d.addEventListener("toggle", function () {
+      if (d.open) seen.add(i);
+      prog.textContent = seen.size + " di " + quiz.length + " aperte";
+    });
+  });
+})();
+</script>

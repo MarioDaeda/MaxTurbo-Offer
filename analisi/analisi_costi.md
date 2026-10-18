@@ -12,21 +12,24 @@ Prompt usato: [`prompts/analisi_costi.md`](../prompts/analisi_costi.md). Le cifr
   - [2.1 Legale e burocratico](#21-legale-e-burocratico)
   - [2.2 Abbonamenti e AI per lo sviluppo](#22-abbonamenti-e-ai-per-lo-sviluppo)
   - [2.3 Infrastruttura di produzione](#23-infrastruttura-di-produzione)
-  - [2.4 Materiale e trasferte](#24-materiale-e-trasferte)
+  - [2.4 Materiale](#24-materiale)
   - [2.5 Tempo dei soci (stima)](#25-tempo-dei-soci-stima)
 - [3. Tagli e vantaggi, in ordine di risparmio](#3-tagli-e-vantaggi-in-ordine-di-risparmio)
   - [Docenti e strutture Unibo da contattare](#docenti-e-strutture-unibo-da-contattare)
   - [Bandi e agevolazioni](#bandi-e-agevolazioni)
-- [4. Flusso di cassa (scenario realistico, senza INPS)](#4-flusso-di-cassa-scenario-realistico-senza-inps)
-- [5. Rischi e costi nascosti](#5-rischi-e-costi-nascosti)
-- [6. Domande da fare](#6-domande-da-fare)
+- [4. Gestione delle spese: una società per un solo progetto](#4-gestione-delle-spese-una-società-per-un-solo-progetto)
+- [5. Flusso di cassa (scenario realistico, senza INPS)](#5-flusso-di-cassa-scenario-realistico-senza-inps)
+- [6. Rischi e costi nascosti](#6-rischi-e-costi-nascosti)
+- [7. Domande da fare](#7-domande-da-fare)
 - [Fonti](#fonti)
 
 ## In breve
 
-- Il progetto costa poco da costruire e far girare: in 15 mesi, **circa 5.000 € nello scenario minimo e circa 11.000 € in quello realistico**, contro 12.000 € fissi del pilota (24.000 € con il bonus).
+- Il progetto costa poco da costruire e far girare: in 15 mesi, **circa 4.000 € nello scenario minimo e circa 8.700 € in quello realistico**, contro 12.000 € fissi del pilota (24.000 € con il bonus).
 - **Il rischio più grande è l'INPS**: se i due soci lavorano nella SRL in modo abituale, può scattare l'iscrizione alla gestione commercianti, circa 4.500 € l'anno a testa **(stima)**. Da sola vale 9.000 € e va chiarita con il commercialista *prima* di costituire.
 - **Il taglio più grande è sull'infrastruttura**: per il pilota usare un'API pay-per-token in UE con modelli open-weight (meno di 50 €/mese) invece di una GPU dedicata (circa 1.000 €/mese).
+- **Una società, un progetto**: la SRL nasce per mantenere ed espandere il Preparatore AI con Learnis, non per cercare altri clienti. Niente spese commerciali e costi fissi al minimo (sezione 4).
+- **Esclusi dal conto**: abbonamenti Claude per i due soci e trasferte Cesena–Rimini, già coperti a parte.
 - **Il vantaggio più grande da studenti Unibo**: i docenti di ALMA AI e CIRSFID per il parere su AI Act e minori, Almacube per incubazione e crediti cloud, e lo status di startup innovativa per esenzioni e bandi.
 
 ## 1. Tabella riassuntiva (15 mesi)
@@ -38,14 +41,14 @@ Prompt usato: [`prompts/analisi_costi.md`](../prompts/analisi_costi.md). Le cifr
 | INPS soci | 0 € | 0 € | 11.000 € |
 | Legale, privacy, AI Act | 300 € | 1.500 € | 4.000 € |
 | Assicurazioni | 0 € | 1.300 € | 2.500 € |
-| Abbonamenti AI e strumenti di sviluppo | 700 € | 2.000 € | 3.300 € |
+| Altri strumenti di sviluppo (Claude escluso) | 0 € | 0 € | 300 € |
 | Infrastruttura di produzione | 500 € | 1.000 € | 7.000 € |
-| Materiale e trasferte | 200 € | 400 € | 1.000 € |
+| Materiale (trasferte escluse) | 0 € | 100 € | 300 € |
 | Registrazione software (per startup innovativa) | 0 € | 300 € | 300 € |
-| **Totale** | **circa 5.000 €** | **circa 11.000 €** | **circa 37.600 €** |
+| **Totale** | **circa 4.000 €** | **circa 8.700 €** | **circa 33.900 €** |
 | Imposte sull'utile (IRES 24% + IRAP 3,9%) | sull'utile | sull'utile | sull'utile |
 
-Lo scenario prudente presuppone INPS dovuto per entrambi, SRL ordinaria con notaio pieno, GPU dedicata nei mesi di rollout e un avvocato a pagamento.
+Lo scenario prudente presuppone INPS dovuto per entrambi, SRL ordinaria con notaio pieno, GPU dedicata nei mesi di rollout e un avvocato a pagamento. Non sono inclusi gli abbonamenti Claude dei due soci né le trasferte Cesena–Rimini.
 
 ## 2. Voci di costo nel dettaglio
 
@@ -88,7 +91,7 @@ Lo scenario prudente presuppone INPS dovuto per entrambi, SRL ordinaria con nota
 | Azure Dev Tools for Teaching | gratis | Per studenti Unibo |
 | Figma, Notion, Linear | piano gratuito o Education | Bastano i piani gratuiti per due persone |
 
-**Consiglio**: un solo abbonamento di punta per lo sviluppo agentico (Claude Max 5x, circa 105 €/mese) usato da chi scrive più codice, e un piano da 20 € per l'altro. Non pagate tre assistenti che fanno la stessa cosa. Scenario realistico: circa 130 €/mese, circa 2.000 € in 15 mesi.
+**Nel conto**: gli abbonamenti Claude dei due soci sono esclusi perché già coperti. Il resto si fa con i piani gratuiti; non aggiungete altri assistenti che fanno la stessa cosa di Claude.
 
 Attenzione: le licenze Education (Microsoft 365, Copilot Student, JetBrains) sono di norma **per uso non commerciale**. Usatele per studiare e prototipare; per il lavoro fatturato a Learnis servono gli account a pagamento o i programmi startup (sezione 3).
 
@@ -111,14 +114,15 @@ Quando passare alla GPU dedicata: solo quando il costo delle API supera circa 1.
 
 Serve un **DPA con il provider** (Scaleway lo offre di serie) e la verifica che il provider non usi i dati per addestrare: va dichiarato a Learnis.
 
-### 2.4 Materiale e trasferte
+### 2.4 Materiale
 
 | Voce | Costo | Note |
 |---|---:|---|
 | Computer | 0 € | Usate i vostri; nessuna GPU locale necessaria |
-| Treno Cesena–Rimini | circa 4 € a tratta **(stima)** | Una visita a settimana in due per 13 settimane: circa 200 € |
 | Materiale per formare i tutor | 0–100 € | Guida in PDF e video registrati |
 | Telefono di test (iOS/Android) | 0 € | Usate i vostri |
+
+Le trasferte Cesena–Rimini sono escluse dal conto.
 
 ### 2.5 Tempo dei soci (stima)
 
@@ -136,7 +140,7 @@ Con 12.000 € fissi e circa 500 ore, il compenso effettivo è circa 24 €/ora 
 
 | # | Azione | Risparmio | Facilità | Primo passo |
 |---|---|---:|---|---|
-| 1 | Chiarire l'INPS prima di costituire: chi è amministratore, chi lavora "in modo abituale e prevalente", ed eventuali riduzioni per nuovi iscritti | fino a 9.000 €/anno | Media | Prima domanda al commercialista (sezione 6) |
+| 1 | Chiarire l'INPS prima di costituire: chi è amministratore, chi lavora "in modo abituale e prevalente", ed eventuali riduzioni per nuovi iscritti | fino a 9.000 €/anno | Media | Prima domanda al commercialista (sezione 7) |
 | 2 | API pay-per-token in UE invece di GPU dedicata nel pilota | circa 1.000 €/mese | Facile | Account Scaleway, test con Mistral Small e Llama 70B sui 100 casi |
 | 3 | Parere su AI Act, minori e GDPR da docenti Unibo | 1.500–4.000 € | Media | Email a ALMA AI/CIRSFID (sotto) |
 | 4 | Startup innovativa: niente diritto annuale, bolli e diritti di segreteria per 5 anni, accesso a bandi | 500–1.000 € + bandi | Media | Registrare il software o documentare il 15% di spesa in R&S |
@@ -144,10 +148,9 @@ Con 12.000 € fissi e circa 500 ore, il compenso effettivo è circa 24 €/ora 
 | 6 | Crediti cloud per startup | 1.000–5.000 $ subito | Facile | Microsoft for Startups (accesso senza VC), AWS Activate Founders, Google for Startups Start |
 | 7 | DPIA a carico di Learnis (è il titolare) | 1.000–3.000 € | Facile | Scriverlo nel contratto e nel DPA |
 | 8 | SRLS invece di SRL ordinaria | 1.500–3.000 € | Facile | Notaio con atto standard |
-| 9 | Un solo abbonamento AI di punta + uno base | circa 1.000 € | Facile | Decidere chi fa cosa |
-| 10 | Commercialista online o convenzionato con Almacube | 500–1.500 €/anno | Facile | Chiedere 3 preventivi |
-| 11 | Tesi o tirocinio curriculare sul progetto | crediti formativi + supervisione gratuita | Media | Proporre a un relatore il tema "valutazione di tutor LLM per minori" |
-| 12 | Anticipo del 50% alla firma | elimina il fabbisogno di cassa | Facile | Nella proposta: 6.000 € alla firma, 6.000 € a 45 giorni |
+| 9 | Commercialista online o convenzionato con Almacube | 500–1.500 €/anno | Facile | Chiedere 3 preventivi |
+| 10 | Tesi o tirocinio curriculare sul progetto | crediti formativi + supervisione gratuita | Media | Proporre a un relatore il tema "valutazione di tutor LLM per minori" |
+| 11 | Anticipo del 50% alla firma | elimina il fabbisogno di cassa | Facile | Nella proposta: 6.000 € alla firma, 6.000 € a 45 giorni |
 
 ### Docenti e strutture Unibo da contattare
 
@@ -173,22 +176,52 @@ Per i crediti cloud servono un'email sul dominio aziendale e un sito vero: le ri
 
 La procedura online di costituzione della startup innovativa senza notaio, citata da alcune fonti camerali, è stata annullata dal Consiglio di Stato nel 2021: oggi serve il notaio. Da verificare con il commercialista.
 
-## 4. Flusso di cassa (scenario realistico, senza INPS)
+## 4. Gestione delle spese: una società per un solo progetto
+
+La SRL non nasce come agenzia che cerca sempre nuovi clienti: il suo scopo è mantenere ed espandere il Preparatore AI con Learnis (pilota, rollout in Italia, poi Spagna e USA). Questo cambia come si spende.
+
+**Cosa non serve**
+- Niente marketing, sito vetrina curato, CRM, lead generation, fiere o abbonamenti commerciali: l'unico cliente è già noto.
+- Niente strumenti multi-cliente (gestione progetti a pagamento, fatturazione avanzata, ticketing): bastano i piani gratuiti.
+- Niente dipendenti o collaboratori fissi finché il rollout non lo richiede.
+
+**Regole di spesa**
+- **Costi fissi al minimo**: SRLS, commercialista online, nessuna sede (domicilio presso un socio o Almacube). Obiettivo: costi fissi sotto i 300 €/mese.
+- **Costi variabili legati a Learnis**: infrastruttura e API crescono solo con i corsisti, e il canone di 30 € a corsista li copre con ampio margine. Scrivete nel contratto che oltre una soglia di consumo il costo passa a Learnis.
+- **Ogni spesa nuova deve servire al progetto**: manutenzione, nuove sedi, nuove funzioni chieste da Learnis, fine-tuning. Se non serve a Learnis, non si fa.
+- **Riserva di cassa**: tenete in società almeno 6 mesi di costi fissi (circa 1.500–2.000 €), per coprire i ritardi di pagamento.
+
+**Mantenimento ed espansione (dal mese 6)**
+
+| Fase | Cosa si paga | Costo mensile (stima) |
+|---|---|---:|
+| Manutenzione (solo Rimini o pochi centri) | Hosting, API, monitoraggio, commercialista, polizze | circa 250–350 € |
+| Espansione in Italia (fino a 33 centri) | Come sopra + più API, eventuale GPU dedicata oltre circa 1.000 €/mese di API | 400–1.500 € |
+| Espansione all'estero (Spagna, USA) | Traduzione dei materiali, consulenza privacy locale, eventuale istanza separata | da valutare, a carico del prezzo di rollout |
+
+**Rischio di un solo cliente**: tutti i ricavi vengono da Learnis. Se il progetto si ferma, la società resta con i costi fissi senza entrate. Due tutele:
+- nel contratto di rollout, una durata minima (es. 12 mesi) e un preavviso di disdetta di almeno 3 mesi;
+- un piano di chiusura: una SRLS ferma costa comunque circa 2.000–3.000 € l'anno (commercialista, diritti, libri) e la liquidazione costa circa 1.000–2.000 € **(stima)**. Se il rollout non parte entro 6–9 mesi dalla fine del pilota, conviene chiudere o mettere in liquidazione.
+
+Lo status di startup innovativa resta possibile anche con un solo cliente, purché la società faccia R&S o registri il software.
+
+## 5. Flusso di cassa (scenario realistico, senza INPS)
 
 | Periodo | Uscite | Entrate | Saldo cumulato |
 |---|---:|---:|---:|
-| Mese 0: costituzione SRLS, firma digitale, PEC, primo mese strumenti | circa 1.500 € | capitale versato 3.000 € | +1.500 € |
-| Mese 1: discovery e demo gratuita | circa 200 € | 0 € | +1.300 € |
-| Mese 2: firma pilota, legale, assicurazioni | circa 2.800 € | 6.000 € (50% alla firma, se negoziato) | +4.500 € |
-| Mesi 3–5: pilota | circa 600 €/mese | 6.000 € a metà pilota | +8.700 € |
-| Mese 5: fine pilota, report KPI | — | 0–12.000 € di bonus (pagamento a 30–60 giorni) | +8.700 / +20.700 € |
-| Mesi 6–15: rollout o fermo | circa 450 €/mese | 30 € a corsista | dipende dal rollout |
+| Mese 0: costituzione SRLS, firma digitale, PEC, primo mese strumenti | circa 1.400 € | capitale versato 3.000 € | +1.600 € |
+| Mese 1: discovery e demo gratuita | circa 100 € | 0 € | +1.500 € |
+| Mese 2: firma pilota, legale, assicurazioni | circa 2.800 € | 6.000 € (50% alla firma, se negoziato) | +4.700 € |
+| Mesi 3–5: pilota | circa 350 €/mese | 6.000 € a metà pilota | +9.650 € |
+| Mese 5: fine pilota, report KPI | — | 0–12.000 € di bonus (pagamento a 30–60 giorni) | +9.650 / +21.650 € |
+| Mesi 6–15: manutenzione ed espansione | circa 250–350 €/mese | 30 € a corsista | dipende dal rollout |
 
-Senza anticipo, se Learnis paga a fine pilota bisogna anticipare circa **6.000 €** (capitale o finanziamento soci). Con l'anticipo del 50% il progetto si autofinanzia dal mese 2. A fine anno restano da pagare IRES e IRAP sull'utile e il saldo del commercialista.
+Senza anticipo, se Learnis paga a fine pilota bisogna anticipare circa **5.500 €** (capitale o finanziamento soci). Con l'anticipo del 50% il progetto si autofinanzia dal mese 2. A fine anno restano da pagare IRES e IRAP sull'utile e il saldo del commercialista.
 
-## 5. Rischi e costi nascosti
+## 6. Rischi e costi nascosti
 
 - **INPS commercianti**: vedi sopra. È la voce che può cambiare il conto da positivo a pari.
+- **Un solo cliente**: vedi sezione 4; durata minima e preavviso nel contratto.
 - **Il bonus a KPI può non arrivare**: pianificate tutto sui 12.000 € fissi.
 - **Garanzia "altri 30 giorni gratis"**: un mese di lavoro non pagato, circa 100–150 ore.
 - **Licenze Education usate per lavoro commerciale**: violano i termini d'uso.
@@ -199,14 +232,15 @@ Senza anticipo, se Learnis paga a fine pilota bisogna anticipare circa **6.000 �
 - **Fine degli studi**: le licenze studenti scadono con la laurea.
 - **Prezzi delle API**: fissare a contratto una soglia di consumo oltre la quale il costo è a carico di Learnis.
 
-## 6. Domande da fare
+## 7. Domande da fare
 
 **Al commercialista**
 1. Con due soci che sviluppano software per la società, siamo obbligati all'iscrizione INPS commercianti? Conviene che solo uno sia amministratore? Ci sono riduzioni per nuovi iscritti nel 2026?
 2. SRLS o SRL ordinaria per noi? E startup innovativa subito, iscrivendo direttamente la società nella sezione speciale per avere le esenzioni dall'inizio?
 3. Come ci paghiamo: compenso amministratore, utili, o niente il primo anno?
 4. Qual è il suo canone annuo tutto incluso, bilancio compreso?
-5. Possiamo usare il credito d'imposta R&S per le ore di sviluppo e valutazione dei modelli?
+5. Se il progetto con Learnis si ferma, quanto costa tenere ferma la società e quanto chiuderla?
+6. Possiamo usare il credito d'imposta R&S per le ore di sviluppo e valutazione dei modelli?
 
 **Ai docenti (ALMA AI, CIRSFID, corso di laurea)**
 1. Un tutor AI che non dà voti né decide percorsi, usato da minori dai 14 anni, rientra nell'alto rischio dell'AI Act (istruzione)?

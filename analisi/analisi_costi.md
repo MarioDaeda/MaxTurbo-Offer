@@ -4,6 +4,24 @@
 
 Prompt usato: [`prompts/analisi_costi.md`](../prompts/analisi_costi.md). Le cifre con fonte sono verificate alla data indicata; quelle marcate **(stima)** vanno confermate con un preventivo.
 
+## Indice
+
+- [In breve](#in-breve)
+- [1. Tabella riassuntiva (15 mesi)](#1-tabella-riassuntiva-15-mesi)
+- [2. Voci di costo nel dettaglio](#2-voci-di-costo-nel-dettaglio)
+  - [2.1 Legale e burocratico](#21-legale-e-burocratico)
+  - [2.2 Abbonamenti e AI per lo sviluppo](#22-abbonamenti-e-ai-per-lo-sviluppo)
+  - [2.3 Infrastruttura di produzione](#23-infrastruttura-di-produzione)
+  - [2.4 Materiale e trasferte](#24-materiale-e-trasferte)
+  - [2.5 Tempo dei soci (stima)](#25-tempo-dei-soci-stima)
+- [3. Tagli e vantaggi, in ordine di risparmio](#3-tagli-e-vantaggi-in-ordine-di-risparmio)
+  - [Docenti e strutture Unibo da contattare](#docenti-e-strutture-unibo-da-contattare)
+  - [Bandi e agevolazioni](#bandi-e-agevolazioni)
+- [4. Flusso di cassa (scenario realistico, senza INPS)](#4-flusso-di-cassa-scenario-realistico-senza-inps)
+- [5. Rischi e costi nascosti](#5-rischi-e-costi-nascosti)
+- [6. Domande da fare](#6-domande-da-fare)
+- [Fonti](#fonti)
+
 ## In breve
 
 - Il progetto costa poco da costruire e far girare: in 15 mesi, **circa 5.000 € nello scenario minimo e circa 11.000 € in quello realistico**, contro 12.000 € fissi del pilota (24.000 € con il bonus).
